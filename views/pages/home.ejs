@@ -1,11 +1,29 @@
-<% layout("/layouts/boilerplate.ejs")%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonify</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+
+</head>
+<body>
+    <div >
     <div>
         <h1>Spill the Tea Anonymously</h1>
         <p>Share your drama, confessions, and get advice from the community.<br>No judgment, just real talk. 💯</p>
         <div>
-            <a href="/create"><button>Spill Now 🍵</button></a>
-            <a href="/feed"><button>Browse Drama 👀</button></a>
+            <form method="get" action="/create">
+                <button>Spill Now 🍵</button>
+            </form>
+            <form method="get" action="/feed">
+                <button>Browse Drama 👀</button>
+            </form>
+            
         </div>
     </div>
 
@@ -58,3 +76,11 @@
         <p>Join thousands sharing their stories and getting real advice</p>
         <a href="create"><button>Start Spilling 🍵</button></a>
     </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+    

@@ -1,0 +1,282 @@
+ 
+
+ .body{
+    background-color: #0C0A09; 
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+ }
+ 
+.navbar{
+    background: #0C0A09;
+    border-bottom: #2a2929 solid 1px;
+}
+.navbar-brand {
+  font-weight: bold;
+  color: #A855F7 !important; 
+}
+
+.nav-btn{
+    border-radius: 0.75rem !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    background: linear-gradient(#58cae1,#31a5e8);
+    box-shadow: 0 0 25px #58cae1;
+    transition: transform 0.2s ease-in-out;
+   
+}
+
+.nav-btn:hover{
+    box-shadow: 0 0 25px rgba(78, 20, 133, 0.8);
+    transform: scale(1.1);
+}
+
+.option{
+  color: #fff !important;
+  margin-right: 1rem;
+  transition: color 0.2s;
+  opacity: 0.5;
+}
+
+.nav-link:hover {
+  opacity: 1; 
+}
+
+
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #111;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem auto;
+  max-width: 600px;
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.8);
+  
+}
+.banner h1{
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.7));
+}
+
+.top{
+    text-align: center;
+}
+
+.top h2{
+    font-weight: 600;
+}
+.top p{
+    opacity: 0.7;
+}
+
+.back a{
+    text-decoration: none;
+    color: #bbb;
+    font-size: 0.95rem;
+    opacity: 0.7;
+    
+}
+
+.back a:hover{
+    opacity: 1;
+}
+
+ .tea-form{
+    background: #221c2c6a;
+  border-radius: 16px;
+  border: 0.25px solid #3534345c;
+  padding: 1.75rem;
+  max-width: 700px;
+  margin: 2rem auto;
+ }
+ 
+.tea-form h3{
+    font-weight: 600;
+}
+
+.form-label {
+  font-weight:light;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: #bbb;          
+  opacity: 1;
+  font-weight: lighter;
+  font-size: 0.95rem;
+}
+
+input.form-control,
+textarea.form-control,select.form-control{
+    background-color: #111;
+    border-radius: 1rem;
+    border: #2a2929 solid 1px;
+}
+
+input.form-control::placeholder,
+textarea.form-control::placeholder, select.form-control {
+  color: #bbb;
+  opacity: 0.8;   
+
+}
+
+.text-mute {
+    text-align: left;
+    color: #bbb;
+    font-size: smaller;
+}
+
+.annonymously{
+    text-align: left !important;
+    border: none;
+    border-radius: 1rem;
+    background-color: #3534345c;
+    padding: 0.75rem;
+    
+}
+
+.annonymously .form-check-input {
+  width: 50px !important;
+  height: 26px;
+  background-color: #444;
+  border-radius: 34px;
+  border: none;
+  cursor: pointer;
+  transition:  0.2s ease;
+}
+.annonymously .form-check-input:before {
+  content: "";
+  position: absolute !important;
+  width: 20px;
+  height: 20px;
+  top: 3px;
+  left: 3px;
+  display: none;
+  background: #fff;
+  border-radius: 50%;
+    transition: 0.2s ease-in-out;
+}
+.annonymously .form-check-input:checked {
+  background-color: #a855f7;
+}
+
+
+.annonymously .form-check-label {
+  margin-left: 10px;
+  color: #fff;
+}
+
+
+.tags{
+    border-radius: 3rem !important;
+    font-size: smaller !important;
+    border-color: #bbbbbbb7 !important;
+    color: white !important;
+}
+
+.tags:hover{
+    background: #a855f7 !important;
+    border: none;
+}
+
+.selected{
+    border-radius: 3rem !important;
+    background: rgb(27, 233, 230) !important;
+    cursor: pointer !important;
+    transition: 0.2s ease-in-out;
+    color: black !important;
+    text-align: center !important;
+
+}
+.selected:hover{
+    background: rgb(138, 36, 36) !important;
+    color: white !important;
+}
+
+
+ .gradient-btn {
+    background: linear-gradient(90deg, #a855f7, #f472b6);
+    border: none;
+    padding: 0.75rem;
+    font-weight: bold !important;
+    border-radius: 2rem !important;
+    font-size: x-large !important;
+    
+  }
+
+
+  .gradient-btn:hover {
+    opacity: 0.9;
+  }
+
+.card{
+  background-color: #221c2c6a !important;
+  border-radius: 16px !important;
+  border: 0.25px solid #3534345c !important;
+  padding: 1rem !important;
+  margin: 0 auto !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+}
+
+.card:hover{
+  box-shadow: 0 0 25px rgb(73, 35, 108);
+transform: scale(1.1);
+
+}
+
+.post-link{
+  text-decoration: none !important;
+}
+
+
+.card-title{
+  color: white !important;
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+}
+
+
+.card-text{
+  color: white !important;
+  opacity: 0.5;
+  text-align: left !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  font-size: 0.95rem !important;
+}
+
+.card-badge {
+  color: #fff !important;
+  font-weight: 500;
+  padding: 0.35em 0.75em !important;
+}
+
+/* Category badge color */
+.card-badge.Relationship {
+  background: linear-gradient(135deg, #EC4899, #F43F5E) !important;
+}
+
+.card-badge.Family {
+  background: linear-gradient(135deg, #F97316, #F59E0B) !important;
+}
+
+.card-badge.Friendship {
+  background: linear-gradient(135deg, #3B82F6, #06B6D4) !important;
+}
+
+
+.card-badge.Drama {
+  background: linear-gradient(135deg, #8B5CF6, #6366F1) !important;
+}
+
+.card-badge.Advice {
+  background: linear-gradient(135deg, #10B981, #14B8A6) !important;
+}
+

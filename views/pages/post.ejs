@@ -1,0 +1,16 @@
+<% layout("/layouts/boilerplate.ejs")%>
+
+<h3>Post:</h3>
+
+<ul>
+    <li><%=post.title%></li>
+    <li><%=post.tags%></li>
+    <li><%=post.anonymous%></li>
+    <li><%=post.category%></li>
+    <li><%=post.story%></li>
+</ul>
+<br>
+<a href="/post/<%=post._id%>/edit">Edit</a>
+<form action="/post/<%=post._id%>?_method=DELETE" method="post">
+    <button>Delete</button>
+</form>

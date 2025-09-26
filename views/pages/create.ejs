@@ -1,0 +1,154 @@
+<% layout("/layouts/boilerplate.ejs")%>
+    <div class="col-8 offset-2">
+        <br>
+
+        <div class="back offset-2">
+            <a href="/feed"><i class="fa-solid fa-arrow-left"></i> Back to Feed</a>
+        </div>
+        <div class="top">
+            <div class="banner mt-4">
+                <h1>🍵</h1>
+            </div>
+            <h2>Spill the Tea</h2>
+            <p>Share your story anonymously and get advice from the community</p>
+        </div>
+
+        <div class="tea-form">
+            <form action="/feed" method="post">
+                <h3>Your Story</h3>
+                <div class="mb-4 title-section">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" class="form-control" placeholder="Give your story a catchy title" name="post[title]">
+                </div>
+
+                <div class="mb-4 category-section">
+                    <label for="category" class="form-label">Category:</label>
+                    <select class="form-control" name="post[category]">
+                        <option selected>Choose a category...</option>
+                        <option value="Relationship">Relationship 💕</option>
+                        <option value="Family">Family 👨‍👩‍👧‍👦</option>
+                        <option value="Hot Take">Hot Take ❤️‍🔥</option>
+                        <option value="Friendship">Friendship 👫</option>
+                        <option value="Drama">Drama 🎭</option>
+                        <option value="Advice">Advice 🤔</option>
+                    </select>
+                </div>
+
+                <div class="mb-4 story-section">
+                    <label for="story" class="form-label">Your Story:</label>
+                    <textarea class="form-control " rows="6" placeholder="Tell us what happened...Don't hold back!🍵"
+                        name="post[story]" type="text"></textarea>
+                </div>
+
+
+                <!-- Tags -->
+                <div class="mb-4 tag-section">
+                    <label class="form-label">Tags (Optional):</label>
+                    <!-- Selected tags -->
+                    <div id="selectedTags" class="mb-3"></div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="tagInput" class="form-control" placeholder="Add a custom tag..." >
+                        <button type="button" class="btn btn-outline-secondary" id="addTagBtn">Add</button>
+                    </div>
+
+                    <!-- Popular tags -->
+                    <p class="text-mute">Popular tags:</p>
+                    <div id="popularTags" class="d-flex flex-wrap gap-2 mb-2">
+                        <% let
+                            popularTags=["toxic-friend","breakup","college","work","parents","roommate","dating","school","social-media","mental-health","money","future"];
+                            %>
+                            <% popularTags.forEach(tag=> { %>
+                                <button type="button" class="btn btn-sm btn-outline-primary popular-tag tags">
+                                    <%= tag %>
+                                </button>
+                                <% }) %>
+                    </div>
+
+                    <!-- Tag count -->
+                    <p class="text-mute"><span id="tagCount">0</span>/5 tags selected</p>
+
+                    <!-- Hidden field to submit tags-->
+                    <input type="hidden" name="post[tags]" id="tagsInputHidden">
+                </div>
+
+                <!-- Anonymous toggle -->
+                <div class="form-check-reverse form-switch mb-3 mt-4 annonymously">
+                    <input class="form-check-input" type="checkbox" id="anonymous" name="post[anonymous]" checked>
+                    <label class="form-check-label" for="anonymous">
+                        Post Anonymously <br>
+                        <p class="text-mute">Your identity will be completely hidden</p>
+                    </label>
+                </div>
+
+                <!-- Community Guidelines -->
+                <div class="alert alert-info  mt-3 mb-4 guidline" role="alert">
+                    <strong><i class="fa-solid fa-triangle-exclamation"></i> Community Guidelines</strong><br>
+                    Keep it respectful, no hate speech, and remember - what you share here stays here.
+                    Be kind to others going through tough times.
+                </div>
+
+                <!-- Submit button -->
+                <div>
+                    <a>
+                        <button type="submit" class="btn w-100 text-white gradient-btn">
+                            Spill It ☕
+                        </button>
+                    </a>
+
+                </div>
+
+
+
+            </form>
+
+        </div>
+        <br><br>
+    </div>
+
+    <script>
+        const input = document.getElementById("tagInput");
+        const addBtn = document.getElementById("addTagBtn");
+        const selectedTagsDiv = document.getElementById("selectedTags");
+        const popularTagBtns = document.querySelectorAll(".popular-tag");
+        const tagCount = document.getElementById("tagCount");
+        const tagsInputHidden = document.getElementById("tagsInputHidden");
+
+        let tags = [];
+
+        function updateTags() {
+            selectedTagsDiv.innerHTML = "";
+            tags.forEach(tag => {
+                const badge = document.createElement("span");
+                badge.className = "badge  me-2 p-2 selected";
+                badge.innerHTML = `${tag} <button type="button" class="btn-close btn-close-black ms-2 " style="font-size:0.6rem" onclick="removeTag('${tag}')"></button>`;
+                selectedTagsDiv.appendChild(badge);
+            });
+            tagCount.textContent = tags.length;
+            tagsInputHidden.value = tags.join(","); // store tags in hidden input
+        }
+
+        function addTag(tag) {
+            tag = tag.trim();
+            if (tag && !tags.includes(tag) && tags.length < 5) {
+                tags.push(tag);
+                updateTags();
+            }
+            input.value = "";
+        }
+
+        function removeTag(tag) {
+            tags = tags.filter(t => t !== tag);
+            updateTags();
+        }
+
+        addBtn.addEventListener("click", () => addTag(input.value));
+        input.addEventListener("keydown", e => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                addTag(input.value);
+            }
+        });
+        popularTagBtns.forEach(btn => {
+            btn.addEventListener("click", () => addTag(btn.textContent));
+        });
+    </script>
