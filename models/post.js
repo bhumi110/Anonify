@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+function arrayLimit(val) {
+  return val.length <= 5;
+}
+
 const postSchema=new Schema({
     title:{
         type: String,
@@ -24,21 +28,40 @@ const postSchema=new Schema({
     },
     tags: {
         type: [String],
+        default:[],
         validate: [arrayLimit, '{PATH} exceeds the limit of 5'],
     },
     anonymous: {
         type: Boolean,
-        default: true,
+        default: false,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
+    reactions: {
+    fire: { type: Number, default: 0 },
+    drama: { type: Number, default: 0 },
+    skull: { type: Number, default: 0 },
+    shock: { type: Number, default: 0 },
+  },
+  comments:[
+    {
+        type:Schema.Types.ObjectId,
+        ref:"Comment",
     }
+  ],
+}, { timestamps: true });
+
+/*
+postSchema.virtual("commentCount").get(function () {
+  return this.comments ? this.comments.length : 0;
 });
 
-function arrayLimit(val) {
-  return val.length <= 5;
-}
+postSchema.virtual("reactionTotal").get(function () {
+  return Object.values(this.reactions || {}).reduce((a, b) => a + b, 0);
+});
+
+// ✅ Enable virtuals in JSON/objects
+postSchema.set("toObject", { virtuals: true });
+postSchema.set("toJSON", { virtuals: true });
+*/
 
 const Post = mongoose.model("Post", postSchema);
 module.exports = Post;

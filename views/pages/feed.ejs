@@ -1,43 +1,48 @@
 <% layout("/layouts/boilerplate.ejs")%>
-    <div >
-        <h2>Feed 🔥</h2>
-        <p >The latest drama and advice from the community</p>
-    </div>
 
-    <div>
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-    </div>
+    <div class="col-8 offset-2">
+        <br>
+        <div class="heading">
+            <h2>Feed 🔥</h2>
+            <p>The latest drama and advice from the community</p>
+        </div>
 
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            🔥 Trending
-        </button>
-        <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item" href="#" role="button">🔥 Trending</a></li>
-            <li><a class="dropdown-item" href="#" role="button">Latest</a></li>
-            <li><a class="dropdown-item" href="#" role="button">Most Comments</a></li>
-        </ul>
-    </div>
+        <div class="searchbar">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2 feed-input" type="search" placeholder="Search drama, advice, or confessions..." />
+                <button class="btn btn-outline-dark feed-btn" type="submit" id="feed-btn">Search</button>
+            </form>
+        </div>
 
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" >
+                🔥 Trending
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="#" role="button">🔥 Trending</a></li>
+                <li><a class="dropdown-item" href="#" role="button">⏰ Latest</a></li>
+                <li><a class="dropdown-item" href="#" role="button">💬 Most Comments</a></li>
+            </ul>
+        </div>
+
+
+    </div>
 
     <div class="col ">
         <% for(let post of allPosts){ %>
             <a href="/post/<%=post._id%>" class="post-link">
-                <div class="card" style="width: 60vw; height: 20vh;">
-                    <div class="card-body">
-                        <h5 class="card-title">
+                <div class="card feedcard" style="width: 60vw; height: 20vh;">
+                    <div class="card-body feedcard-body">
+                        <h5 class="card-title feedcard-title">
                             <%=post.title%>
                         </h5>
                         <span class="badge rounded-pill text-bg-danger card-badge <%=post.category%>">
                             <%=post.category%>
                         </span>
                         <% if(post.anonymous){%>
-                            <span class="badge rounded-pill text-bg-dark card-badge anonymous">Anonymous</span>
+                            <span class="badge rounded-pill text-bg-dark card-badge anonymous ">Anonymous</span>
                             <%}%>
-                                <p class="card-text">
+                                <p class="card-text feedcard-text">
                                     <%=post.story%>
                                 </p>
                     </div>
@@ -45,3 +50,4 @@
             </a>
             <%}%>
     </div>
+    <br><br><br>

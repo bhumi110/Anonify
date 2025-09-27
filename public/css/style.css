@@ -1,10 +1,11 @@
- 
-
- .body{
-    background-color: #0C0A09; 
+ html, .body {
+  height: 100%;
+  margin: 0;
+  background-color: #0C0A09;
   color: #fff;
-  font-family: 'Inter', sans-serif;
- }
+}
+
+
  
 .navbar{
     background: #0C0A09;
@@ -212,7 +213,7 @@ textarea.form-control::placeholder, select.form-control {
     opacity: 0.9;
   }
 
-.card{
+.feedcard{
   background-color: #221c2c6a !important;
   border-radius: 16px !important;
   border: 0.25px solid #3534345c !important;
@@ -222,7 +223,7 @@ textarea.form-control::placeholder, select.form-control {
   
 }
 
-.card:hover{
+.feedcard:hover{
   box-shadow: 0 0 25px rgb(73, 35, 108);
 transform: scale(1.1);
 
@@ -233,7 +234,7 @@ transform: scale(1.1);
 }
 
 
-.card-title{
+.feedcard-title{
   color: white !important;
   font-size: 1.25rem !important;
   font-weight: 600 !important;
@@ -241,7 +242,7 @@ transform: scale(1.1);
 }
 
 
-.card-text{
+.feedcard-text{
   color: white !important;
   opacity: 0.5;
   text-align: left !important;
@@ -280,3 +281,121 @@ transform: scale(1.1);
   background: linear-gradient(135deg, #10B981, #14B8A6) !important;
 }
 
+.card-badge.anonymous{
+  border: 1px #413f3f solid !important;
+}
+
+.heading h2{
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+.heading p{
+  opacity: 0.6;
+}
+.dropdown-toggle{
+ background: #1f1d1d !important;
+ border-radius: 0.75rem !important;
+ border: #413f3f 1px solid !important;
+ margin-bottom: 1.75rem;
+}
+
+.dropdown-menu{
+  background: #1f1d1d !important;
+  border-radius: 1.25rem !important;
+}
+
+.dropdown-toggle:hover{
+  border: #A855F7 2px solid !important;
+}
+
+.dropdown-item:hover{
+  background: #d43989 !important;
+  border-radius: 1rem !important;
+}
+
+.feed-btn{
+  border-color: #d43989 !important;
+  color: #d43989 !important;
+  transition: 0.1s ease-in-out !important;
+}
+.feed-btn:hover{
+  background-color:#d43989 !important ;
+  color: white !important;
+}
+
+.feed-input:hover{
+  border: #A855F7 2px solid !important;
+}
+
+.searchbar, .heading{
+  margin-bottom: 1.25rem !important;
+}
+
+.postcard{
+  background-color: #1f1d1d !important;
+  border-radius: 1.5rem !important;
+  padding: 1.75rem !important;
+  color: white !important;
+  border: 1px #413f3f solid !important;
+  width: 60vw !important;
+  margin: 0 auto !important;
+}
+
+.postcard-title{
+  font-size: 1.8rem;
+  font-weight: 600 ;
+}
+
+.post-btn{
+  display:flex;
+}
+.post-edit, .post-delete{
+  margin-left: 15px;
+  
+}
+
+.post-delete{
+border-color: #A855F7 !important;
+  color: #A855F7 !important;
+  transition: 0.1s ease-in-out !important;
+}
+
+.post-delete:hover{
+background-color:#A855F7 !important ;
+  color: white !important;
+}
+
+.post-edit{
+border-color: #d43989 !important;
+  color: #d43989 !important;
+  transition: 0.1s ease-in-out !important;
+}
+
+.post-edit:hover{
+  background-color:#d43989 !important ;
+  color: white !important;
+}
+
+.comment-btn{
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  text-align: right !important;
+}
+
+.reaction-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.2s;
+  color: white;
+}
+
+.reaction-btn:hover {
+  transform: scale(1.2);
+  border-radius: 2rem;
+  background-color: #413f3f;
+}

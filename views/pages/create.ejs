@@ -14,17 +14,18 @@
         </div>
 
         <div class="tea-form">
-            <form action="/feed" method="post">
+            <form action="/feed" method="post" novalidate class="needs-validation">
                 <h3>Your Story</h3>
                 <div class="mb-4 title-section">
                     <label for="title" class="form-label">Title:</label>
-                    <input type="text" class="form-control" placeholder="Give your story a catchy title" name="post[title]">
+                    <input type="text" class="form-control" placeholder="Give your story a catchy title" name="post[title]" required>
+                    
                 </div>
 
                 <div class="mb-4 category-section">
                     <label for="category" class="form-label">Category:</label>
-                    <select class="form-control" name="post[category]">
-                        <option selected>Choose a category...</option>
+                    <select class="form-control" name="post[category]" required>
+                        <option value="">Choose a category...</option>
                         <option value="Relationship">Relationship 💕</option>
                         <option value="Family">Family 👨‍👩‍👧‍👦</option>
                         <option value="Hot Take">Hot Take ❤️‍🔥</option>
@@ -37,7 +38,7 @@
                 <div class="mb-4 story-section">
                     <label for="story" class="form-label">Your Story:</label>
                     <textarea class="form-control " rows="6" placeholder="Tell us what happened...Don't hold back!🍵"
-                        name="post[story]" type="text"></textarea>
+                        name="post[story]" type="text" required></textarea>
                 </div>
 
 

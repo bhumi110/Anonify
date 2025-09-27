@@ -1,24 +1,27 @@
 <% layout("/layouts/boilerplate.ejs")%>
-<br>
-<div class="col-8 offset-2 ">
-    <div class="top ">
+    <br>
+    <div class="col-8 offset-2 ">
+        <div class="top ">
             <div class="banner mt-4">
                 <h1>🍵</h1>
             </div>
             <h2>Edit</h2>
-    </div>
-<div class="tea-form">
-            <form method="post" action="/post/<%=post._id%>?_method=PUT">
+        </div>
+        <div class="tea-form">
+            <form method="post" action="/post/<%=post._id%>?_method=PUT" novalidate class="needs-validation">
                 <h3>Your Story</h3>
                 <div class="mb-4 title-section">
                     <label for="title" class="form-label">Title:</label>
-                    <input type="text" class="form-control" placeholder="Give your story a catchy title" name="post[title]" value="<%=post.title%>">
+                    <input type="text" class="form-control" placeholder="Give your story a catchy title"
+                        name="post[title]" value="<%=post.title%>" required>
                 </div>
 
                 <div class="mb-4 category-section">
                     <label for="category" class="form-label">Category:</label>
-                    <select class="form-control" name="post[category]">
-                        <option ><%=post.category%></option>
+                    <select class="form-control" name="post[category]" required>
+                        <option value="<%=post.category%>">
+                            <%=post.category%>
+                        </option>
                         <option value="Relationship">Relationship 💕</option>
                         <option value="Family">Family 👨‍👩‍👧‍👦</option>
                         <option value="Hot Take">Hot Take ❤️‍🔥</option>
@@ -31,7 +34,7 @@
                 <div class="mb-4 story-section">
                     <label for="story" class="form-label">Your Story:</label>
                     <textarea class="form-control " rows="6" placeholder="Tell us what happened...Don't hold back!🍵"
-                        name="post[story]" type="text" >"<%=post.story%></textarea>
+                        name="post[story]" type="text" required>"<%=post.story%></textarea>
                 </div>
 
 
@@ -41,7 +44,7 @@
                     <!-- Selected tags -->
                     <div id="selectedTags" class="mb-3"></div>
                     <div class="input-group mb-3">
-                        <input type="text" id="tagInput" class="form-control" placeholder="Add a custom tag..." >
+                        <input type="text" id="tagInput" class="form-control" placeholder="Add a custom tag...">
                         <button type="button" class="btn btn-outline-secondary" id="addTagBtn">Add</button>
                     </div>
 
@@ -59,7 +62,7 @@
                     </div>
 
                     <!-- Tag count -->
-                    <p class="text-mute"><span id="tagCount" >0</span>/5 tags selected</p>
+                    <p class="text-mute"><span id="tagCount">0</span>/5 tags selected</p>
 
                     <!-- Hidden field to submit tags-->
                     <input type="hidden" name="post[tags]" id="tagsInputHidden" value="<%=post.tags%>">
@@ -67,7 +70,8 @@
 
                 <!-- Anonymous toggle -->
                 <div class="form-check-reverse form-switch mb-3 mt-4 annonymously">
-                    <input class="form-check-input" type="checkbox" id="anonymous" name="post[anonymous]" value="<%=post.anonymous%>" checked>
+                    <input class="form-check-input" type="checkbox" id="anonymous" name="post[anonymous]"
+                        value="<%=post.anonymous%>" checked>
                     <label class="form-check-label" for="anonymous">
                         Post Anonymously <br>
                         <p class="text-mute">Your identity will be completely hidden</p>
@@ -98,7 +102,7 @@
         </div>
         <br><br>
     </div>
-</div>
+    </div>
 
     <script>
         const input = document.getElementById("tagInput");

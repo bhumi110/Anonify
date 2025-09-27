@@ -1,16 +1,105 @@
 <% layout("/layouts/boilerplate.ejs")%>
+    <br><br>
+    <div class="back offset-2 ">
+        <a href="/feed"><i class="fa-solid fa-arrow-left"></i> Back to Feed</a>
+    </div>
 
-<h3>Post:</h3>
 
-<ul>
-    <li><%=post.title%></li>
-    <li><%=post.tags%></li>
-    <li><%=post.anonymous%></li>
-    <li><%=post.category%></li>
-    <li><%=post.story%></li>
-</ul>
-<br>
-<a href="/post/<%=post._id%>/edit">Edit</a>
-<form action="/post/<%=post._id%>?_method=DELETE" method="post">
-    <button>Delete</button>
-</form>
+    <div class="col-8 offset-2 mt-3 mb-2">
+        <div class="card postcard">
+            <div class="card-body postcard-body">
+                <h4 class="card-title postcard-title">
+                    <%=post.title%>
+                </h4>
+                <span class="badge rounded-pill text-bg-danger card-badge <%=post.category%> mb-2">
+                    <%=post.category%>
+                </span>
+                <% if(post.anonymous){%>
+                    <span class="badge rounded-pill text-bg-dark card-badge anonymous ">Anonymous</span>
+                    <%}%>
+                        <div class="post-meta">
+                            <small class="text-mute">
+                                <i class="bi bi-clock"></i>
+                                <i class="fa-regular fa-clock"></i>
+                                <%= post.timeAgo %>
+                            </small>
+                        </div>
+
+                        <div>
+                            <% for(let tag of post.tags){%>
+                                <span class="badge rounded-pill text-bg-info card-badge <%=post.tags%>">
+                                    <%=tag%>
+                                </span>
+                                <%}%>
+                        </div>
+
+                        <p class="card-text postcard-text mt-2">
+                            <%=post.story%>
+                        </p>
+            </div>
+
+            <div class="post-btn mt-4 ">
+                <a href="/post/<%=post._id%>/edit">
+                    <button class="btn btn-outline-light post-edit">Edit</button>
+                </a>
+                <form action="/post/<%=post._id%>?_method=DELETE" method="post">
+                    <button class="btn btn-outline-light post-delete">Delete</button>
+                </form>
+            </div>
+            <hr>
+            <div class="reactions d-flex gap-3">
+                <button class="reaction-btn" data-id="<%= post._id %>" data-reaction="fire">🔥 <span>
+                        <%= post.reactions?.fire || 0 %>
+                    </span></button>
+                <button class="reaction-btn" data-id="<%= post._id %>" data-reaction="drama">🎭 <span>
+                        <%= post.reactions?.drama || 0 %>
+                    </span></button>
+                <button class="reaction-btn" data-id="<%= post._id %>" data-reaction="skull">💀 <span>
+                        <%= post.reactions?.skull || 0 %>
+                    </span></button>
+                <button class="reaction-btn" data-id="<%= post._id %>" data-reaction="shock">😳 <span>
+                        <%= post.reactions?.shock || 0 %>
+                    </span></button>
+            </div>
+
+        </div>
+
+        <div class="comment postcard mt-4">
+            <form action="/post/<%=post._id%>/comments" method="post">
+                <h5>Share Your Advice</h5>
+                <div class="comment-box mb-3">
+                    <textarea class="form-control " rows="5"
+                        placeholder="What would you do in this situation? Share your thoughs..." name="comment[comment]"
+                        type="text" id="comment"></textarea>
+                </div>
+                <div class="comment-btn">
+                    <button type="submit" class="btn btn-info nav-btn comment-btn"><i class="fa-regular fa-comment"></i>
+                        Add Comment</button></a>
+                </div>
+            </form>
+
+
+
+        </div> <br><br><br>
+    </div>
+
+
+    <script>
+        document.querySelectorAll(".reaction-btn").forEach(btn => {
+            btn.addEventListener("click", async () => {
+                const postId = btn.dataset.id;
+                const reaction = btn.dataset.reaction;
+
+                try {
+                    const res = await fetch(`/post/${postId}/react/${reaction}`, { method: "POST" });
+                    const data = await res.json();
+                    if (data.success) {
+                        const span = btn.querySelector("span");
+                        span.textContent = parseInt(span.textContent) + 1;
+                    }
+                } catch (err) {
+                    console.error("Reaction failed", err);
+                }
+            });
+        });
+    </script>
