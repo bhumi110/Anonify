@@ -9,8 +9,9 @@ const dayjs = require("dayjs");
 const relativeTime = require("dayjs/plugin/relativeTime");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const { postSchema } = require("./schema.js");
+const { postSchema, commentSchema,replySchema} = require("./schema.js");
 const Comment = require("./models/comment.js");
+const Reply = require("./models/reply.js");
 
 app.use(methodOverride('_method'));
 app.set("view engine", "ejs");
@@ -32,6 +33,8 @@ async function main() {
     await mongoose.connect(MONGO_URL);
 }
 
+
+//--------------SERVER VALIDATION--------------------------------------------------
 const validatePost = (req, res, next) => {
     let { error } = postSchema.validate(req.body);
     if (error) {
@@ -40,7 +43,29 @@ const validatePost = (req, res, next) => {
     } else {
         next();
     }
-}
+};
+
+const validateComment = (req, res, next) => {
+    let { error } = commentSchema.validate(req.body);
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
+};
+
+/*
+const validateReply = (req, res, next) => {
+    let { error } = commentSchema.validate(req.body);
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
+};
+*/
 
 //--------------HOMEPAGE-------------------------
 app.get("/", wrapAsync(async (req, res) => {
@@ -57,14 +82,23 @@ app.get("/feed", wrapAsync(async (req, res) => {
 
 //-------------SHOW---------------------------
 app.get("/post/:id", wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    const post = await Post.findById(id).lean();
+  const { id } = req.params;
 
-    // attach "time ago"
-    post.timeAgo = dayjs(post.createdAt).fromNow();
+  const post = await Post.findById(id)
+    .populate("comments")
+    .lean();
 
-    res.render("pages/post.ejs", { post });
+  post.timeAgo = dayjs(post.createdAt).fromNow();
+
+  if (post.comments) {
+    post.comments.forEach(c => {
+      c.timeAgo = dayjs(c.createdAt).fromNow();
+  });
+  }
+
+  res.render("pages/post.ejs", { post });
 }));
+
 
 
 //------------NEW FORM INPUT---------------------------------
@@ -116,15 +150,32 @@ app.delete("/post/:id", wrapAsync(async (req, res) => {
 
 
 //--------------COMMENT(POST)--------------------------------
-app.post("/post/:id/comments",async(req,res)=>{
-    let post=await Post.findById(req.params.id);
-    let newComment=new Comment(req.body.comment);
-    post.comments.push(newComment)
-    await newComment.save();
-    await post.save();
-    console.log("new comment");
+app.post("/post/:id/comments", validateComment, wrapAsync(async (req, res) => {
+  const post = await Post.findById(req.params.id);
+
+  const newComment = new Comment(req.body.comment);
+  post.comments.push(newComment);
+
+  await newComment.save();
+  await post.save();
+
+  res.redirect(`/post/${post._id}`);
+}));
+
+
+/*
+//------------REPLY TO COMMENT------------------------------------------------------------
+app.post("/post/:id/comments/:commentId/reply",  wrapAsync(async (req, res) => {
+  const {id,commentId}=req.params;
+    const parentComment=await Comment.findById(commentId);
+    const reply=new Comment(req.body.comment);
+    await reply.save();
+    parentComment.reply.push(reply);
+    await parentComment.save();
     res.redirect(`/post/${post._id}`);
-});
+}));
+
+*/
 
 //--------------PROFILE------------------------------
 app.get("/profile", wrapAsync(async (req, res) => {
@@ -144,6 +195,33 @@ app.post("/post/:id/react/:reaction", wrapAsync(async (req, res) => {
     });
     res.json({ success: true });
 }));
+
+
+//----------------COMMENT REVIEW------------------------------------------------------------------
+app.post("/post/:id/comment/:commentId/review/:type", async (req, res) => {
+  const { commentId, type } = req.params;
+  if (!["heart", "brokenheart"].includes(type)) {
+    return res.status(400).json({ success: false, message: "Invalid review type" });
+  }
+
+  try {
+    const updatedComment = await Comment.findByIdAndUpdate(
+      commentId, 
+      { $inc: { [`review.${type}`]: 1 } }, 
+      { new: true }
+    );
+
+    if (!updatedComment) {
+      return res.status(404).json({ success: false, message: "Comment not found" });
+    }
+    res.json({ success: true, review: updatedComment.review });
+  } catch (err) {
+    console.error("Error updating review:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
 
 /*
 app.get("/testpost",async(req,res)=>{

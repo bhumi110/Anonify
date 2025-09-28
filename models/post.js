@@ -2,66 +2,50 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 function arrayLimit(val) {
-  return val.length <= 5;
+    return val.length <= 5;
 }
 
-const postSchema=new Schema({
-    title:{
-        type: String,
-        required: true,
+const postSchema = new Schema(
+  {
+    title: { 
+        type: String, 
+        required: true 
     },
-    category:{
-        type: String,
-        enum:[
-            "Relationship",
-            "Family",
-            "Advice",
-            "Friendship",
-            "Drama",
-            "Hot Take",
-        ],
-        required:true,
+    category: {
+      type: String,
+      enum: ["Relationship", "Family", "Advice", "Friendship", "Drama", "Hot Take"],
+      required: true,
     },
-    story:{
-        type:String,
-        required:true,
+    story: { 
+        type: String, 
+        required: true 
     },
     tags: {
-        type: [String],
-        default:[],
-        validate: [arrayLimit, '{PATH} exceeds the limit of 5'],
+      type: [String],
+      default: [],
+      validate: [val => val.length <= 5, "{PATH} exceeds the limit of 5"],
     },
-    anonymous: {
-        type: Boolean,
-        default: false,
+    anonymous: { 
+        type: Boolean, 
+        default: false 
     },
     reactions: {
-    fire: { type: Number, default: 0 },
-    drama: { type: Number, default: 0 },
-    skull: { type: Number, default: 0 },
-    shock: { type: Number, default: 0 },
+      fire: { type: Number, default: 0 },
+      drama: { type: Number, default: 0 },
+      skull: { type: Number, default: 0 },
+      shock: { type: Number, default: 0 },
+    },
+    comments: [
+        { 
+            type: Schema.Types.ObjectId, 
+            ref: "Comment" 
+        }
+    ],
   },
-  comments:[
-    {
-        type:Schema.Types.ObjectId,
-        ref:"Comment",
-    }
-  ],
-}, { timestamps: true });
+  { timestamps: true }
+);
 
-/*
-postSchema.virtual("commentCount").get(function () {
-  return this.comments ? this.comments.length : 0;
-});
 
-postSchema.virtual("reactionTotal").get(function () {
-  return Object.values(this.reactions || {}).reduce((a, b) => a + b, 0);
-});
-
-// ✅ Enable virtuals in JSON/objects
-postSchema.set("toObject", { virtuals: true });
-postSchema.set("toJSON", { virtuals: true });
-*/
 
 const Post = mongoose.model("Post", postSchema);
 module.exports = Post;

@@ -65,22 +65,59 @@
         </div>
 
         <div class="comment postcard mt-4">
-            <form action="/post/<%=post._id%>/comments" method="post">
+            <form action="/post/<%=post._id%>/comments" method="post" novalidate class="needs-validation">
                 <h5>Share Your Advice</h5>
                 <div class="comment-box mb-3">
                     <textarea class="form-control " rows="5"
                         placeholder="What would you do in this situation? Share your thoughs..." name="comment[comment]"
-                        type="text" id="comment"></textarea>
+                        type="text" id="comment" required></textarea>
                 </div>
                 <div class="comment-btn">
                     <button type="submit" class="btn btn-info nav-btn comment-btn"><i class="fa-regular fa-comment"></i>
                         Add Comment</button></a>
                 </div>
             </form>
+        </div>
+
+        <div class="mt-5">
+            <h4>Advice & Opinions</h4>
+            <% for (let comment of post.comments) { %>
+                <div class="comment-card mt-4">
+                    <div class="post-meta comment-time">
+                        <small class="text-mute">
+                            <i class="fa-regular fa-clock"></i>
+                            <%= comment.timeAgo %>
+                        </small>
+                    </div>
+                    <p class="comment-text ">
+                        <%= comment.comment %>
+                    </p>
+
+                    <div class="comment-actions d-flex gap-4">
+                        <div class="comment-review">
+                            <button class=" reply-btn btn btn-outline-light" data-id="<%=comment._id%>"
+                                data-review="heart"><i class="fa-solid fa-heart"></i><span>
+                                    <%= comment.review ? comment.review.heart : 0 %>
+                                </span></button>
+                            <button class=" reply-btn btn btn-outline-light" data-id="<%=comment._id%>"
+                                data-review="brokenheart"><i class="fa-solid fa-heart-crack"></i><span>
+                                    <%= comment.review ? comment.review.brokenheart : 0 %>
+                                </span></button>
+                        </div>
 
 
+                        <form>
+                            <input class="form-control" type="text" name="reply[reply]" style="display: none;"
+                                required />
+                            <button type="submit" class="btn btn-outline-light reply-btn"><i
+                                    class="fa-solid fa-reply"></i> Reply</button>
+                        </form>
+                    </div>
+                </div>
 
-        </div> <br><br><br>
+                <% } %>
+                    <br><br><br>
+        </div>
     </div>
 
 
@@ -102,4 +139,29 @@
                 }
             });
         });
+
+        document.querySelectorAll(".comment-review button").forEach(btn => {
+            btn.addEventListener("click", async () => {
+                const postId = "<%= post._id %>";
+                const commentId = btn.dataset.id;  
+                const review = btn.dataset.review; 
+
+                try {
+                    const res = await fetch(`/post/${postId}/comment/${commentId}/review/${review}`, {
+                        method: "POST"
+                    });
+
+                    const data = await res.json();
+                    if (data.success) {
+                        const span = btn.querySelector("span");
+                        span.textContent = parseInt(span.textContent) + 1;
+                    }
+                } catch (err) {
+                    console.error("Review failed", err);
+                }
+            });
+        });
+
+
+
     </script>

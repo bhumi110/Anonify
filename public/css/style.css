@@ -4,8 +4,6 @@
   background-color: #0C0A09;
   color: #fff;
 }
-
-
  
 .navbar{
     background: #0C0A09;
@@ -398,4 +396,43 @@ border-color: #d43989 !important;
   transform: scale(1.2);
   border-radius: 2rem;
   background-color: #413f3f;
+}
+
+.comment-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.comment-time {
+  font-size: 0.8rem;
+  color: #737373;
+  margin-left: 8px;
+}
+
+.comment-text {
+  font-size: 1rem;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* Replies (indented) */
+.comment-replies {
+  margin-left: 40px;
+  margin-top: 12px;
+  border-left: 2px solid #2d2d2d;
+  padding-left: 16px;
+}
+
+.reply-btn{
+  border: none !important;
+  font-size: 0.75rem !important;
+  border-radius: 2rem !important;
+}
+.reply-btn:hover{
+background:#d34e93 !important ;
+color: white !important;
 }
