@@ -1,86 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anonify</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/style.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
 </head>
+
 <body>
-    <div >
     <div>
-        <h1>Spill the Tea Anonymously</h1>
-        <p>Share your drama, confessions, and get advice from the community.<br>No judgment, just real talk. 💯</p>
-        <div>
-            <form method="get" action="/create">
-                <button>Spill Now 🍵</button>
-            </form>
-            <form method="get" action="/feed">
-                <button>Browse Drama 👀</button>
-            </form>
+        <div class="home">
+            <div class="elements">
+                <h1>🍵</h1>
+                <h1>Spill the Tea</h1>
+                <h2>Anonymously</h2>
+                <p>Share your drama, confessions, and get advice from the community.<br>No judgment, just real talk. 💯
+                </p>
+
+                <div class="home-btn">
+                    <form method="get" action="/create">
+                        <button class="btn  text-white spill-btn ">Spill Now 🍵 <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </form>
+                    <form method="get" action="/feed">
+                        <button class="btn btn-outline-light drama-btn ">Browse Drama 👀</button>
+                    </form>
+                </div>
+
+            </div>
             
         </div>
-    </div>
 
-    <div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
 
-    <div>
-        <h2>How It Works</h2>
-        <p>Three simple steps to get the advice you need</p>
-        <div>
+        <div class="instructions">
+            <h2>How It Works</h2>
+            <p>Three simple steps to get the advice you need</p>
             <div>
-                <h4>1. Post</h4>
-                <p>Share your story, drama, or question anonymously. No judgment zone.</p>
+                <div class="card">
+                    <h4 class="card-title">1. Post</h4>
+                    <p class="card-body">Share your story, drama, or question anonymously. No judgment zone.</p>
+                </div>
+                <div class="card">
+                    <h4 class="card-title">2. React</h4>
+                    <p class="card-body">Community reacts with emojis and shows support or solidarity.</p>
+                </div>
+                <div class="card">
+                    <h4 class="card-title">3. Advice</h4>
+                    <p class="card-body">Get real advice and different perspectives from people who care.</p>
+                </div>
             </div>
+        </div>
+
+        <div class="features">
+            <h2>Why Spill the Tea?</h2>
+            <p>A safe space designed to share, connect, and get real advice</p>
             <div>
-                <h4>2. React</h4>
-                <p>Community reacts with emojis and shows support or solidarity.</p>
+                <div>
+                    <h4>100% Anonymous</h4>
+                    <p>Share without fear. Your identity stays completely private.</p>
+                </div>
+                <div>
+                    <h4>Real Community</h4>
+                    <p>Get advice from people who actually understand your situation.</p>
+                </div>
+                <div>
+                    <h4>No Judgment</h4>
+                    <p>A supportive space where you can be your authentic self.</p>
+                </div>
             </div>
-            <div>
-                <h4>3. Advice</h4>
-                <p>Get real advice and different perspectives from people who care.</p>
-            </div>
+        </div>
+
+        <div class="ready">
+            <h2>Ready to Spill? ☕</h2>
+            <p>Join thousands sharing their stories and getting real advice</p>
+            <a href="create"><button>Start Spilling 🍵</button></a>
         </div>
     </div>
 
-    <div>
-        <h2>Why Spill the Tea?</h2>
-        <p>A safe space designed to share, connect, and get real advice</p>
-        <div>
-            <div>
-                <h4>100% Anonymous</h4>
-                <p>Share without fear. Your identity stays completely private.</p>
-            </div>
-            <div>
-                <h4>Real Community</h4>
-                <p>Get advice from people who actually understand your situation.</p>
-            </div>
-            <div>
-                <h4>No Judgment</h4>
-                <p>A supportive space where you can be your authentic self.</p>
-            </div>
-        </div>
-    </div>
+    <footer>
+        
+    </footer>
 
-    <div>
-        <h2>Ready to Spill? ☕</h2>
-        <p>Join thousands sharing their stories and getting real advice</p>
-        <a href="create"><button>Start Spilling 🍵</button></a>
-    </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 
 </body>
-</html>
 
-    
+</html>

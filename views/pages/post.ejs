@@ -33,7 +33,7 @@
                                 <%}%>
                         </div>
 
-                        <p class="card-text postcard-text mt-2">
+                        <p class="card-text postcard-text mt-2" >
                             <%=post.story%>
                         </p>
             </div>
@@ -105,12 +105,15 @@
                                 </span></button>
                         </div>
 
-
                         <form>
                             <input class="form-control" type="text" name="reply[reply]" style="display: none;"
                                 required />
                             <button type="submit" class="btn btn-outline-light reply-btn"><i
                                     class="fa-solid fa-reply"></i> Reply</button>
+                        </form>
+
+                        <form action="/post/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="post">
+                            <button class="btn btn-outline-light reply-btn"><i class="fa-solid fa-trash"></i> Delete</button>
                         </form>
                     </div>
                 </div>

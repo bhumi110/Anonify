@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Comment=require("./comment.js");
 
 function arrayLimit(val) {
     return val.length <= 5;
@@ -45,7 +46,11 @@ const postSchema = new Schema(
   { timestamps: true }
 );
 
-
+postSchema.post("findOneAndDelete",async(post)=>{
+    if(post){
+        await Comment.deleteMany({_id:{$in: post.comments}});
+    }
+});
 
 const Post = mongoose.model("Post", postSchema);
 module.exports = Post;

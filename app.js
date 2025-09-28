@@ -162,6 +162,13 @@ app.post("/post/:id/comments", validateComment, wrapAsync(async (req, res) => {
   res.redirect(`/post/${post._id}`);
 }));
 
+//-----------DELETE COMMENT---------------------------------------------
+app.delete("/post/:id/comments/:commentId",wrapAsync(async(req,res)=>{
+    let {id,commentId}=req.params;
+    await Post.findByIdAndUpdate(id,{$pull:{comments:commentId}});
+    await Comment.findByIdAndDelete(commentId);
+    res.redirect(`/post/${id}`);
+}));
 
 /*
 //------------REPLY TO COMMENT------------------------------------------------------------

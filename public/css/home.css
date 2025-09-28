@@ -1,0 +1,81 @@
+
+.home {
+  background: linear-gradient(120deg, #A855F7, #F472B6, #00FFFF);
+  z-index: 1;
+  width: 100vw;
+  height: 90vh;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  position: relative;
+  
+}
+
+.elements {
+  display: flex;
+  flex-direction: column;
+align-items: center;
+  justify-content: center;
+  padding-top: 9%;
+}
+
+.home-btn{
+    display: inline-flex;
+    gap: 1rem;
+}
+
+ .spill-btn {
+    background: linear-gradient(90deg, #a855f7, #f472b6);
+    border: none !important;
+    padding: 0.5rem 2rem 0.5rem 2rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.75rem !important;
+    font-size: 1.25rem !important;
+    transition: 0.2s ease-in-out;
+  }
+
+  .drama-btn{
+    padding: 0.5rem 2rem 0.5rem 2rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.75rem !important;
+    font-size: 1.25rem !important;
+    background-color: rgba(255, 255, 255, 0.112) !important;
+    
+  }
+  .drama-btn:hover{
+    background-color: rgba(255, 255, 255, 0.29) !important;
+  }
+
+.elements h1{
+    font-size: 5rem;
+    font-weight: 800;
+    color: white;
+}
+.elements h2{
+    font-size: 4rem;
+    font-weight: 700;
+    color: white;
+}
+.elements p{
+    text-align: center;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.815);
+    
+}
+
+  .spill-btn:hover {
+    transform: scale(1.1);
+  }
+
+
+
+.instructions {
+    background-image: linear-gradient(180deg,#0d141b);
+  color: white;
+  height: 80vh;
+ padding-top: 4rem;
+}
+
+.instructions h2,p{
+    text-align: center;
+    
+}
