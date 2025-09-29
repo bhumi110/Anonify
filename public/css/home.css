@@ -8,7 +8,12 @@
   position: relative;
   
 }
-
+.nav-brand {
+  font-weight: 900 !important;
+  font-size: 4rem !important;
+  color: #550e97 !important; 
+  text-align: center;
+}
 .elements {
   display: flex;
   flex-direction: column;
@@ -69,13 +74,165 @@ align-items: center;
 
 
 .instructions {
-    background-image: linear-gradient(180deg,#0d141b);
+    background-image: linear-gradient(180deg,#090A0B);
   color: white;
-  height: 80vh;
+  height: 70vh;
  padding-top: 4rem;
+ width: 100vw;
+
 }
 
 .instructions h2,p{
     text-align: center;
-    
+    margin-bottom: 1.75rem;
+}
+.instructions h2{
+  font-size: 2rem;
+  font-weight: 700;
+  
+}
+.instructions p{
+  font-size: 1.25rem;
+  opacity: 0.8;
+  
+}
+.card{
+ 
+ padding: 1rem !important;
+ margin: 0 auto !important;
+ text-align: center !important;
+ border-radius: 1.75rem !important;
+ background: #090A0B !important;
+}
+
+.card-title{
+  font-weight: 700;
+}
+.card-body{
+  font-size: 1.1rem !important;
+  opacity: 0.7 !important;
+  font-weight: 400;
+  color: white !important;
+}
+
+.post h4{
+  color:#A855F7 ;
+}
+.react h4{
+  color: #00FFFF;
+}
+.advice h4{
+  color: #F472B6;
+}
+
+.post{
+  border: #A855F7 1px solid !important;
+  transition: 0.3s ease-in-out;
+}
+.post:hover{
+  transform: scale(1.1);
+  background-color: #22152d7f !important;
+  box-shadow:0 0px 16px 2px #a955f76d !important;
+}
+
+.react{
+  border: #00FFFF 1px solid !important;
+  transition: 0.3s ease-in-out;
+}
+.react:hover{
+  transform: scale(1.1);
+  background-color: #26545476 !important;
+  box-shadow:0 0px 16px 2px #00ffff7e !important;
+}
+.advice{
+  border: #F472B6 1px solid !important;
+  transition: 0.3s ease-in-out;
+}
+.advice:hover{
+  transform: scale(1.1);
+  background-color: #632a4785 !important;
+  box-shadow:0 0px 16px 2px #f472b597 !important;
+}
+
+.features{
+  background-color: #191a1b;
+  color: white;
+  height: 60vh;
+ padding-top: 4rem;
+ 
+ width: 100vw;
+}
+.features h2,p{
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+.features h2{
+  font-size: 2rem;
+  font-weight: 700;
+  
+}
+.features p{
+  font-size: 1.25rem;
+  opacity: 0.8;
+}
+
+.anonymous, .real, .judgment{
+  background-color: #191a1b !important;
+  border: none !important;
+  color: white !important;
+}
+
+.ready{
+  background-color: #090A0B;
+  color: white;
+  height: 40vh;
+ padding-top: 4rem;
+ width: 100vw;
+ text-align: center;
+}
+.ready h2{
+  font-size: 2rem;
+  font-weight: 700;
+margin-bottom: 1.75rem;
+}
+
+.ready p{
+  font-size: 1.25rem;
+  opacity: 0.8;
+   margin-bottom: 1.75rem;
+}
+
+.ready-btn{
+  box-shadow: 0 0 25px #a955f76d;
+  transition: 0.3s ease-in-out;
+}
+.ready-btn:hover{
+  box-shadow: 0 0 25px #f472b597;
+  
+}
+footer{
+  background-color: #191a1b;
+  text-align: center;
+  height: 30vh;
+
+}
+footer a{
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  opacity: 0.7;
+  
+}
+footer h3{
+  padding-top: 2rem;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #A855F7;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+}
+footer h5{
+  color: white;
+  opacity: 0.5;
+  font-size: 1rem;
+  font-weight: 400;
 }
