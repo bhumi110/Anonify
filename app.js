@@ -13,6 +13,9 @@ const { postSchema, commentSchema,replySchema} = require("./schema.js");
 const Comment = require("./models/comment.js");
 const Reply = require("./models/reply.js");
 
+const session=require("express-session");
+const flash=require("connect-flash");
+
 app.use(methodOverride('_method'));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -20,6 +23,26 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.engine("ejs", ejsMate);
 dayjs.extend(relativeTime);
+
+const sessionOptions={
+    secret:"secret",
+    resave:false,
+    saveUninitialized:true,
+    cookie:{
+        expires:Date.now() + 7*24*60*1000,
+        maxAge:7*24*60*1000,
+        httpOnly:true,
+    }
+};
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req,res,next)=>{
+    res.locals.success=req.flash("success");
+    res.locals.error=req.flash("error");
+    next();
+});
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/anonify";
 
@@ -95,7 +118,10 @@ app.get("/post/:id", wrapAsync(async (req, res) => {
       c.timeAgo = dayjs(c.createdAt).fromNow();
   });
   }
-
+if(!post){
+    res.flash("error","Post you requested for does not exist...");
+    res.redirect("/feed");
+}
   res.render("pages/post.ejs", { post });
 }));
 
@@ -122,6 +148,7 @@ app.post("/feed", validatePost, wrapAsync(async (req, res, next) => {
 
     const newPost = new Post(req.body.post);
     await newPost.save();
+    req.flash("success","Post created successfully!")
     res.redirect("/feed");
     console.log(newPost);
 }));
@@ -130,6 +157,10 @@ app.post("/feed", validatePost, wrapAsync(async (req, res, next) => {
 app.get("/post/:id/edit", wrapAsync(async (req, res) => {
     let { id } = req.params;
     const post = await Post.findById(id);
+    if(!post){
+    res.flash("error","Post you requested for does not exist...");
+    res.redirect("/feed");
+}
     res.render("pages/edit.ejs", { post });
 }));
 
@@ -137,6 +168,7 @@ app.get("/post/:id/edit", wrapAsync(async (req, res) => {
 app.put("/post/:id", validatePost, wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Post.findByIdAndUpdate(id, { ...req.body.post });
+    req.flash("success","Post updated successfully!")
     res.redirect(`/post/${id}`);
 }))
 
@@ -145,6 +177,7 @@ app.delete("/post/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deletedPost = await Post.findByIdAndDelete(id);
     console.log(deletedPost);
+    req.flash("success","Post deleted successfully!")
     res.redirect("/feed");
 }))
 
@@ -158,7 +191,7 @@ app.post("/post/:id/comments", validateComment, wrapAsync(async (req, res) => {
 
   await newComment.save();
   await post.save();
-
+    req.flash("success","Comment created successfully!")
   res.redirect(`/post/${post._id}`);
 }));
 
@@ -167,6 +200,7 @@ app.delete("/post/:id/comments/:commentId",wrapAsync(async(req,res)=>{
     let {id,commentId}=req.params;
     await Post.findByIdAndUpdate(id,{$pull:{comments:commentId}});
     await Comment.findByIdAndDelete(commentId);
+    req.flash("success","Comment deleted successfully!")
     res.redirect(`/post/${id}`);
 }));
 
