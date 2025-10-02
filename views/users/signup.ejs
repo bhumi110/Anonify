@@ -1,0 +1,31 @@
+<% layout("/layouts/boilerplate.ejs")%>
+    <div class="col-8 offset-2">
+        <br>
+        <h1 class="top ">Signup on Anonify</h1>
+        <div class="back offset-2 tea-form">
+            
+            <form action="/signup" method="post" class="needs-validation" novalidate>
+                <div class="mb-4 title-section">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="username" class="form-control" placeholder="Give your story a catchy title" id="username" name="username" required>
+                    
+                </div>
+
+                <div class="mb-4 title-section">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" placeholder="Give your story a catchy title" id="email" name="email" required>
+                    
+                </div>
+
+                <div class="mb-4 title-section">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" placeholder="Give your story a catchy title" id="password" name="password" required>
+                    
+                </div>
+
+                <button class="btn btn-outline-light post-delete">
+                    Signup
+                </button>
+            </form>
+        </div>
+    </div>

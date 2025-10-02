@@ -12,10 +12,15 @@ const ExpressError = require("./utils/ExpressError.js");
 const { postSchema, commentSchema,replySchema} = require("./schema.js");
 const Comment = require("./models/comment.js");
 const Reply = require("./models/reply.js");
+const passport=require("passport");
+const localStrategy=require("passport-local");
+const User=require("./models/user.js");
 
 
 const session=require("express-session");
 const flash=require("connect-flash");
+
+
 
 app.use(methodOverride('_method'));
 app.set("view engine", "ejs");
@@ -38,6 +43,13 @@ const sessionOptions={
 
 app.use(session(sessionOptions));
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next)=>{
     res.locals.success=req.flash("success");
@@ -90,6 +102,18 @@ const validateReply = (req, res, next) => {
     }
 };
 */
+
+/*
+app.get("/demouser",async(req,res)=>{
+    let fakeuser=new User({
+        email:"someone@gmail.com",
+        username:"someone"
+    });
+    let registereduser=await User.register(fakeuser,"password");
+    res.send(registereduser);
+});
+*/
+
 
 //--------------HOMEPAGE-------------------------
 app.get("/", wrapAsync(async (req, res) => {
@@ -264,6 +288,42 @@ app.post("/post/:id/comment/:commentId/review/:type", async (req, res) => {
 });
 
 
+//-----------------USER ROUTE--------------------------------------------------------------------------------
+app.get("/signup",(req,res)=>{
+    res.render("users/signup.ejs");
+});
+
+app.post("/signup",wrapAsync(async(req,res)=>{
+    try{
+        let {username,email,password}=req.body;
+    const newUser=new User({email,username});
+    const registereduser=await User.register(newUser,password);
+    console.log(registereduser);
+    req.flash("success","Account Created!!")
+    res.redirect("/feed");
+    } catch(e){
+        req.flash("error",e.message);
+        res.redirect("/login");
+    }
+    
+}));
+
+app.get("/login",(req,res)=>{
+    res.render("users/login.ejs");
+});
+
+app.post("/login",passport.authenticate("local",{failureRedirect:"/login",failureFlash:true}),wrapAsync(async(req,res)=>{
+    try{
+    req.flash("success","Welcome back!!")
+    res.redirect("/feed");
+    } catch(e){
+        req.flash("error",e.message);
+        res.redirect("/signup");
+    }
+    
+}))
+
+
 
 /*
 app.get("/testpost",async(req,res)=>{
@@ -278,6 +338,8 @@ app.get("/testpost",async(req,res)=>{
     res.send("successs");
 });
 */
+
+
 
 app.use((req, res, next) => {
     next(new ExpressError(404, 'Page Not Found!'));
