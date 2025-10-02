@@ -8,11 +8,19 @@
       <div class="navbar-nav ms-auto">
         <a class="nav-link option" href="/feed">Feed🔥</a>
         <a class="nav-link option" href="/profile">Profile</a>
-        
+        <% if(currUser){%>
+        <a class="nav-link option" href="/logout">Log out</a>
+        <%}%>
+
+        <% if(!currUser){%>
+        <a class="nav-link option" href="/signup">Signup</a>
+        <a class="nav-link option" href="/login">Login</a>
+        <%}%>
       </div>
 
       <div class="navbar-nav ms-auto">
         <a class="nav-link " href="/create"><button type="button" class="btn btn-info nav-btn"><i class="fa-solid fa-plus"></i> Spill Tea</button></a>
+        
       </div>
       
     </div>

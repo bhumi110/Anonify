@@ -42,6 +42,9 @@
                         <% if(post.anonymous){%>
                             <span class="badge rounded-pill text-bg-dark card-badge anonymous ">Anonymous</span>
                             <%}%>
+                            <% if(!post.anonymous){%>
+                    <span class="badge rounded-pill text-bg-dark card-badge owner ">@<%=post.owner.username%></span>
+                    <%}%>
                                 <p class="card-text feedcard-text">
                                     <%=post.story%>
                                 </p>

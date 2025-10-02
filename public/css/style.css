@@ -1,8 +1,8 @@
  html, .body {
-  height: 100%;
-  margin: 0;
-  background-color: #0C0A09;
-  color: #fff;
+  height: 100% !important;
+  margin: 0 !important;
+  background-color: #0C0A09 !important;
+  color: #fff !important;
   
 }
  
@@ -285,7 +285,10 @@ transform: scale(1.1);
 .card-badge.anonymous{
   border: 1px #413f3f solid !important;
 }
-
+.card-badge.owner{
+  background: linear-gradient(135deg,#A855F7, #F472B6, #00FFFF) !important;
+  color: #0C0A09 !important;
+}
 .heading h2{
   font-size: 2.25rem;
   font-weight: 600;

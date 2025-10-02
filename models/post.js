@@ -36,12 +36,17 @@ const postSchema = new Schema(
       skull: { type: Number, default: 0 },
       shock: { type: Number, default: 0 },
     },
+    owner:{
+      type:Schema.Types.ObjectId,
+      ref:"User",
+    },
     comments: [
         { 
             type: Schema.Types.ObjectId, 
             ref: "Comment" 
         }
     ],
+
   },
   { timestamps: true }
 );
