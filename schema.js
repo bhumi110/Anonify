@@ -21,3 +21,10 @@ module.exports.commentSchema = Joi.object({
   }).required(),
 });
 
+/*
+module.exports.replySchema = Joi.object({
+  reply: Joi.object({
+    reply: Joi.string().min(1).max(1000).required()
+  }).required()
+});
+*/

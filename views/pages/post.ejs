@@ -19,7 +19,7 @@
                     <%}%>
                         <% if(!post.anonymous){%>
                             <span class="badge rounded-pill text-bg-dark card-badge owner ">@<%=post.owner.username%>
-                                    </span>
+                            </span>
                             <%}%>
                                 <div class="post-meta">
                                     <small class="text-mute">
@@ -91,7 +91,9 @@
 
 
                 <div class="mt-5">
+
                     <h4>Advice & Opinions</h4>
+
                     <% for (let comment of post.comments) { %>
                         <div class="comment-card mt-4">
                             <div class="post-meta comment-time">
@@ -100,48 +102,57 @@
                                     <%= comment.timeAgo %>
                                 </small>
                             </div>
-                            
-                                        <span class="badge rounded-pill text-bg-dark card-badge owner ">@
-                                            <%=comment.author.username%></span>
-                                       
-                                            <p class="comment-text ">
-                                                <%= comment.comment %>
-                                            </p>
 
-                                            <div class="comment-actions d-flex gap-4">
-                                                <div class="comment-review">
-                                                    <button class=" reply-btn btn btn-outline-light"
-                                                        data-id="<%=comment._id%>" data-review="heart"><i
-                                                            class="fa-solid fa-heart"></i><span>
-                                                            <%= comment.review ? comment.review.heart : 0 %>
-                                                        </span></button>
-                                                    <button class=" reply-btn btn btn-outline-light"
-                                                        data-id="<%=comment._id%>" data-review="brokenheart"><i
-                                                            class="fa-solid fa-heart-crack"></i><span>
-                                                            <%= comment.review ? comment.review.brokenheart : 0 %>
-                                                        </span></button>
-                                                </div>
+                            <span class="badge rounded-pill text-bg-dark card-badge owner ">@
+                                <%=comment.author.username%>
+                            </span>
 
-                                                <form>
-                                                    <input class="form-control" type="text" name="reply[reply]"
-                                                        style="display: none;" required />
-                                                    <button type="submit" class="btn btn-outline-light reply-btn"><i
-                                                            class="fa-solid fa-reply"></i> Reply</button>
-                                                </form>
+                            <p class="comment-text ">
+                                <%= comment.comment %>
+                            </p>
 
-                                                <% if(currUser && currUser._id.equals(comment.author._id)){%>
-                                                <form
-                                                    action="/post/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE"
-                                                    method="post">
-                                                    <button class="btn btn-outline-light reply-btn"><i
-                                                            class="fa-solid fa-trash"></i> Delete</button>
-                                                </form>
-                                                <%}%>
-                                            </div>
+                            <div class="comment-actions d-flex gap-4">
+                                <div class="comment-review">
+
+                                    <button class=" reply-btn btn btn-outline-light" data-id="<%=comment._id%>"
+                                        data-review="heart"><i class="fa-solid fa-heart"></i><span>
+                                            <%= comment.review ? comment.review.heart : 0 %>
+                                        </span>
+                                    </button>
+
+                                    <button class=" reply-btn btn btn-outline-light" data-id="<%=comment._id%>"
+                                        data-review="brokenheart"><i class="fa-solid fa-heart-crack"></i><span>
+                                            <%= comment.review ? comment.review.brokenheart : 0 %>
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <form class="reply-form needs-validation" style="display: none;" novalidate>
+                                    <input input class="form-control mb-2" type="text" name="reply[reply]" placeholder="Write your reply..." required  />
+
+                                    <button type="submit" class="btn btn-outline-light reply-btn" ><i class="fa-solid fa-paper-plane"></i> Send</button>
+                                </form>
+
+                                <button type="submit" class="btn btn-outline-light reply-btn toggle-reply-btn">
+                                        Reply
+                                </button>
+
+                                <% if(currUser && currUser._id.equals(comment.author._id)){%>
+                                    <form action="/post/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE"
+                                        method="post">
+                                        <button class="btn btn-outline-light reply-btn"><i
+                                                class="fa-solid fa-trash"></i>
+                                            Delete
+                                        </button>
+
+                                    </form>
+                                    <%}%>
+
+                            </div>
                         </div>
 
                         <% } %>
-                            <br><br><br>
+                    <br><br><br>
                 </div>
     </div>
 
@@ -184,6 +195,14 @@
                 } catch (err) {
                     console.error("Review failed", err);
                 }
+            });
+        });
+
+
+        document.querySelectorAll(".toggle-reply-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const form = btn.previousElementSibling; 
+                form.style.display = (form.style.display === "none" || !form.style.display) ? "block" : "none";
             });
         });
 

@@ -216,12 +216,15 @@ footer{
   height: 22vh;
 
 }
-footer a{
+footer a {
   display: inline-block;
   text-decoration: none;
   color: white;
-  opacity: 0.7;
-  
+  opacity: 0.5;
+  margin-left: 0.5rem;
+}
+footer a:hover{
+  opacity: 1;
 }
 footer h3{
   padding-top: 2rem;

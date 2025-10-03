@@ -8,11 +8,6 @@ const replySchema = new Schema(
             required: true,
             
         },
-        parentComment: {
-            type: Schema.Types.ObjectId,
-            ref: "Comment",
-            required: true
-        },
         
     },
     { timestamps: true }

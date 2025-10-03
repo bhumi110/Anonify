@@ -9,17 +9,24 @@ const commentSchema = new Schema(
     comment: {
       type: String,
       required: true,
-      
+
     },
-    review:{
-      heart: { type: Number, default: 0 },
-      brokenheart: { type: Number, default: 0 },
+    review: {
+      hearts: [{ type: Schema.Types.ObjectId, ref: "User" }],
+      brokenhearts: [{ type: Schema.Types.ObjectId, ref: "User" }],
     },
-    author:{
-      type:Schema.Types.ObjectId,
-      ref:"User",
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
+
+    /*
+    replies: [
+      { type: Schema.Types.ObjectId, ref: "Reply" },
+    ],
+    */
   },
+  
   { timestamps: true }
 );
 

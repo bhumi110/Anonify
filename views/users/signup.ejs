@@ -1,31 +1,59 @@
 <% layout("/layouts/boilerplate.ejs")%>
     <div class="col-8 offset-2">
         <br>
-        <h1 class="top ">Signup on Anonify</h1>
+        <h1 class="top mt-4">Signup on Anonify</h1>
         <div class="back offset-2 tea-form">
-            
+
             <form action="/signup" method="post" class="needs-validation" novalidate>
                 <div class="mb-4 title-section">
                     <label for="username" class="form-label">Username:</label>
-                    <input type="username" class="form-control" placeholder="Give your story a catchy title" id="username" name="username" required>
-                    
+                    <input type="username" class="form-control" placeholder="Give your story a catchy title"
+                        id="username" name="username" required>
+
                 </div>
 
                 <div class="mb-4 title-section">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="email" class="form-control" placeholder="Give your story a catchy title" id="email" name="email" required>
-                    
+                    <input type="email" class="form-control" placeholder="Give your story a catchy title" id="email"
+                        name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Enter a valid email"
+                        required>
+
                 </div>
 
                 <div class="mb-4 title-section">
                     <label for="password" class="form-label">Password:</label>
-                    <input type="password" class="form-control" placeholder="Give your story a catchy title" id="password" name="password" required>
-                    
+                    <input type="password" class="form-control" placeholder="Give your story a catchy title"
+                        id="password" name="password" required>
+
                 </div>
 
-                <button class="btn btn-outline-light post-delete">
+                <button class="btn btn-outline-light post-delete mt-2">
                     Signup
                 </button>
+
+
+
+
+
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById("email").addEventListener("blur", async (e) => {
+            const email = e.target.value;
+            const res = await fetch(`/check-email?email=${email}`);
+            const data = await res.json();
+            if (data.exists) {
+                req.flash("error","Email already registered! Try logging in.");
+            }
+        });
+        document.getElementById("username").addEventListener("blur", async (e) => {
+            const username = e.target.value;
+            const res = await fetch(`/check-username?username=${username}`);
+            const data = await res.json();
+            if (data.exists) {
+                req.flash("error","Username already taken! Try a different one.");
+            }
+        });
+    </script>

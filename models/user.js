@@ -7,8 +7,27 @@ const userSchema=new Schema({
         type:String,
         required:true,
     },
+    username:{
+        type:String,
+        required:true,
+        unique:true
+    },
+    emailVerified: { 
+        type: Boolean, 
+        default: false 
+    },
+    googleId: { 
+        type: String 
+    },
+    emailToken:{
+        type:String,
+    },
+    emailTokenExpires:{
+        type:Date,
+        expires:3600
+    },
 });
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose,{ usernameField: "email" });
 
 module.exports=mongoose.model("User",userSchema);

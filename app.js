@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -10,11 +14,12 @@ const relativeTime = require("dayjs/plugin/relativeTime");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const Comment = require("./models/comment.js");
-const Reply = require("./models/reply.js");
+//const Reply = require("./models/reply.js");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 const User = require("./models/user.js");
-const{isLoggedIn,savedRedirectUrl, isOwner,validateComment,validatePost}=require("./middleware.js");
+const { isLoggedIn, savedRedirectUrl, isOwner, validateComment, validatePost } = require("./middleware.js");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -30,7 +35,7 @@ app.engine("ejs", ejsMate);
 dayjs.extend(relativeTime);
 
 const sessionOptions = {
-    secret: "secret",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -50,10 +55,37 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "/auth/google/callback"
+}, async (accessToken, refreshToken, profile, done) => {
+    try {
+        const email = profile.emails[0].value;
+
+        // Only find existing user
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            // User not found → don’t create new user
+            return done(null, false, { message: "No account found for this Google email." });
+        }
+
+        return done(null, user);
+    } catch (err) {
+        return done(err, null);
+    }
+}));
+
+
+
+
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser=req.user;
+    res.locals.currUser = req.user;
     next();
 });
 
@@ -112,9 +144,10 @@ app.get("/post/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
 
     const post = await Post.findById(id)
-        .populate({path:"comments",
-            populate:{
-                path:"author"
+        .populate({
+            path: "comments",
+            populate: {
+                path: "author"
             }
         })
         .populate("owner")
@@ -137,7 +170,7 @@ app.get("/post/:id", wrapAsync(async (req, res) => {
 
 
 //------------NEW FORM INPUT---------------------------------
-app.get("/create",isLoggedIn,savedRedirectUrl, wrapAsync(async (req, res) => {
+app.get("/create", isLoggedIn, savedRedirectUrl, wrapAsync(async (req, res) => {
     res.render("pages/create.ejs");
 }));
 
@@ -156,7 +189,7 @@ app.post("/feed", validatePost, wrapAsync(async (req, res, next) => {
     }
 
     const newPost = new Post(req.body.post);
-    newPost.owner=req.user._id;
+    newPost.owner = req.user._id;
     await newPost.save();
     req.flash("success", "Post created successfully!")
     res.redirect("/feed");
@@ -164,7 +197,7 @@ app.post("/feed", validatePost, wrapAsync(async (req, res, next) => {
 }));
 
 //-------------EDIT-------------------------------------
-app.get("/post/:id/edit",isLoggedIn,isOwner, wrapAsync(async (req, res) => {
+app.get("/post/:id/edit", isLoggedIn, isOwner, wrapAsync(async (req, res) => {
     let { id } = req.params;
     const post = await Post.findById(id);
     if (!post) {
@@ -175,7 +208,7 @@ app.get("/post/:id/edit",isLoggedIn,isOwner, wrapAsync(async (req, res) => {
 }));
 
 //-----------UPDATE-------------------------------------
-app.put("/post/:id",isLoggedIn,isOwner, validatePost, wrapAsync(async (req, res) => {
+app.put("/post/:id", isLoggedIn, isOwner, validatePost, wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Post.findByIdAndUpdate(id, { ...req.body.post });
     req.flash("success", "Post updated successfully!")
@@ -183,7 +216,7 @@ app.put("/post/:id",isLoggedIn,isOwner, validatePost, wrapAsync(async (req, res)
 }))
 
 //--------------DELETE------------------------------------
-app.delete("/post/:id",isLoggedIn,isOwner, wrapAsync(async (req, res) => {
+app.delete("/post/:id", isLoggedIn, isOwner, wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deletedPost = await Post.findByIdAndDelete(id);
     console.log(deletedPost);
@@ -193,11 +226,11 @@ app.delete("/post/:id",isLoggedIn,isOwner, wrapAsync(async (req, res) => {
 
 
 //--------------COMMENT(POST)--------------------------------
-app.post("/post/:id/comments",isLoggedIn, validateComment, wrapAsync(async (req, res) => {
+app.post("/post/:id/comments", isLoggedIn, validateComment, wrapAsync(async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     const newComment = new Comment(req.body.comment);
-    newComment.author=req.user._id;
+    newComment.author = req.user._id;
     post.comments.push(newComment);
 
     await newComment.save();
@@ -207,7 +240,7 @@ app.post("/post/:id/comments",isLoggedIn, validateComment, wrapAsync(async (req,
 }));
 
 //-----------DELETE COMMENT---------------------------------------------
-app.delete("/post/:id/comments/:commentId",isLoggedIn, wrapAsync(async (req, res) => {
+app.delete("/post/:id/comments/:commentId", isLoggedIn, wrapAsync(async (req, res) => {
     let { id, commentId } = req.params;
     await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } });
     await Comment.findByIdAndDelete(commentId);
@@ -215,19 +248,37 @@ app.delete("/post/:id/comments/:commentId",isLoggedIn, wrapAsync(async (req, res
     res.redirect(`/post/${id}`);
 }));
 
+
+
 /*
 //------------REPLY TO COMMENT------------------------------------------------------------
-app.post("/post/:id/comments/:commentId/reply",  wrapAsync(async (req, res) => {
-  const {id,commentId}=req.params;
-    const parentComment=await Comment.findById(commentId);
-    const reply=new Comment(req.body.comment);
-    await reply.save();
-    parentComment.reply.push(reply);
-    await parentComment.save();
-    res.redirect(`/post/${post._id}`);
-}));
+app.post(
+  "/post/:id/comments/:commentId/reply",
+  validateReply,
+  wrapAsync(async (req, res) => {
+    const { id, commentId } = req.params;
 
+    const parentComment = await Comment.findById(commentId);
+    if (!parentComment) {
+      return res.status(404).send("Comment not found");
+    }
+
+    const reply = new Reply({
+      reply: req.body.reply,
+      author: req.user._id,
+      comment: parentComment._id,
+    });
+
+    await reply.save();
+    parentComment.replies.push(reply._id);
+    await parentComment.save();
+
+    res.redirect(`/post/${id}`);
+  })
+);
 */
+
+
 
 //--------------PROFILE------------------------------
 app.get("/profile", wrapAsync(async (req, res) => {
@@ -235,7 +286,7 @@ app.get("/profile", wrapAsync(async (req, res) => {
 }));
 
 //--------------REACTIONS-------------------------------------------
-app.post("/post/:id/react/:reaction",isLoggedIn, wrapAsync(async (req, res) => {
+app.post("/post/:id/react/:reaction", isLoggedIn, wrapAsync(async (req, res) => {
     const { id, reaction } = req.params;
     const validReactions = ["fire", "drama", "skull", "shock"];
     if (!validReactions.includes(reaction)) {
@@ -250,7 +301,7 @@ app.post("/post/:id/react/:reaction",isLoggedIn, wrapAsync(async (req, res) => {
 
 
 //----------------COMMENT REVIEW------------------------------------------------------------------
-app.post("/post/:id/comment/:commentId/review/:type",isLoggedIn, async (req, res) => {
+app.post("/post/:id/comment/:commentId/review/:type", isLoggedIn, async (req, res) => {
     const { commentId, type } = req.params;
     if (!["heart", "brokenheart"].includes(type)) {
         return res.status(400).json({ success: false, message: "Invalid review type" });
@@ -282,44 +333,88 @@ app.get("/signup", (req, res) => {
 app.post("/signup", wrapAsync(async (req, res) => {
     try {
         let { username, email, password } = req.body;
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            req.flash("error", "Email is already registered. Try logging in.");
+            return res.redirect("/signup");
+        }
+
+        const existingUsername = await User.findOne({ username });
+        if (existingUsername) {
+            req.flash("error", "Username already taken! Try a different one.");
+
+            return res.redirect("/signup");
+        }
+
         const newUser = new User({ email, username });
-        const registereduser = await User.register(newUser, password);
-        console.log(registereduser);
-        req.login(registereduser,(err)=>{
-            if(err){
+        const registeredUser = await User.register(newUser, password);
+        console.log(registeredUser);
+        req.login(registeredUser, (err) => {
+            if (err) {
                 return next(err);
             }
             req.flash("success", "Account Created!!")
-        res.redirect("/feed");
+            res.redirect("/feed");
+
         })
-        
+
     } catch (e) {
         req.flash("error", e.message);
-        res.redirect("/login");
+        res.redirect("/signup");
     }
-
 }));
+
 
 app.get("/login", (req, res) => {
     res.render("users/login.ejs");
 });
 
-app.post("/login",savedRedirectUrl, passport.authenticate("local", { failureRedirect: "/login", failureFlash: true }),async (req, res) => {
-        req.flash("success","Welcome back!!");
-        let redirectUrl=res.locals.redirectUrl || "/feed";
-        res.redirect(redirectUrl);
+
+app.post("/login", savedRedirectUrl, passport.authenticate("local", { failureRedirect: "/login", failureFlash: true }), async (req, res) => {
+    req.flash("success", "Welcome back!!");
+    let redirectUrl = res.locals.redirectUrl || "/feed";
+    res.redirect(redirectUrl);
 
 });
 
-app.get("/logout",(req,res)=>{
-    req.logout((err)=>{
-        if(err){
+
+app.get("/logout", (req, res) => {
+    req.logout((err) => {
+        if (err) {
             next(err);
         }
-        req.flash("success","you are logged out!")
-        res.redirect("/feed");
+        req.flash("success", "you are logged out!")
+        res.redirect("/");
+
     })
 })
+
+//-----------------EMAIL CHECK----------------------------------------
+app.get("/check-email", async (req, res) => {
+    const { email } = req.query;
+    const user = await User.findOne({ email });
+    res.json({ exists: !!user });
+});
+
+
+//-----------------Google routes-----------------------------------------
+app.get("/auth/google",
+    passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+app.get("/auth/google/callback",
+    passport.authenticate("google", {
+        failureRedirect: "/login",
+        failureFlash: true
+    }),
+    (req, res) => {
+        req.flash("success", "Logged in with Google!");
+        res.redirect("/feed");
+        console.log(req.user);
+    }
+);
+
 
 /*
 app.get("/testpost",async(req,res)=>{
