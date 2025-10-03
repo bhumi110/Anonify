@@ -24,11 +24,42 @@
                 <li><a class="dropdown-item" href="#" role="button">⏰ Latest</a></li>
                 <li><a class="dropdown-item" href="#" role="button">💬 Most Comments</a></li>
             </ul>
+
+
+            <div class="btn-group category" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="category" id="btnradio1" autocomplete="off" checked>
+                <label class="btn btn-outline-info category-btn" for="btnradio1">All</label>
+
+                <input type="radio" class="btn-check" name="category" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-info category-btn" for="btnradio2">Relationship</label>
+
+                <input type="radio" class="btn-check" name="category" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-info category-btn" for="btnradio3">Family</label>
+
+                <input type="radio" class="btn-check" name="category" id="btnradio4" autocomplete="off">
+                <label class="btn btn-outline-info category-btn" for="btnradio4">Friendship</label>
+
+                <input type="radio" class="btn-check" name="category" id="btnradio5" autocomplete="off">
+                <label class="btn btn-outline-info category-btn" for="btnradio5">Hot Take</label>
+
+                <input type="radio" class="btn-check" name="category" id="btnradio6" autocomplete="off">
+                <label class="btn btn-outline-info category-btn" for="btnradio6">Drama</label>
+
+                <input type="radio" class="btn-check" name="category" id="btnradio7" autocomplete="off">
+                <label class="btn btn-outline-info category-btn" for="btnradio7">Advice</label>
+            </div>
+
         </div>
 
+
+        <div class="post-count ">
+            <p>
+                <%=allPosts.length%> posts found
+            </p>
+        </div>
     </div>
 
-   
+
 
     <div class="col ">
         <% for(let post of allPosts){ %>

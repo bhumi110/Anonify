@@ -296,6 +296,7 @@ transform: scale(1.1);
 .heading p{
   opacity: 0.6;
 }
+
 .dropdown-toggle{
  background: #1f1d1d !important;
  border-radius: 0.75rem !important;
@@ -490,4 +491,33 @@ color: white !important;
     flex: 1;
     border-bottom: 1px solid #44403C;
     margin: 0 10px;
+}
+
+
+.post-count{
+  opacity: 0.7;
+  font-size:0.95rem;
+}
+
+.category{
+  margin-bottom: 1rem !important;
+  margin-top: -0.5rem !important;
+  width: fit-content !important;
+  margin-left: 3rem !important;
+  border-radius: 1.5rem !important;
+  background: #181616 !important;
+}
+
+.category-btn{
+  border-color: #A855F7 !important;
+  border: none !important;
+  color: white !important;
+  font-size:1rem !important;
+  font-weight: 600 !important;
+}
+
+
+
+.dropdown{
+  display: inline;
 }

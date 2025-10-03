@@ -57,6 +57,11 @@ passport.deserializeUser(User.deserializeUser());
 
 console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
 
+function isValidEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -278,11 +283,9 @@ app.post(
 );
 */
 
-
-
 //--------------PROFILE------------------------------
 app.get("/profile", wrapAsync(async (req, res) => {
-    res.send("profilepage");
+    res.render("users/profile.ejs");
 }));
 
 //--------------REACTIONS-------------------------------------------
@@ -333,6 +336,12 @@ app.get("/signup", (req, res) => {
 app.post("/signup", wrapAsync(async (req, res) => {
     try {
         let { username, email, password } = req.body;
+
+        if (!isValidEmail(email)) {
+        req.flash("error", "Please enter a valid email address");
+        return res.redirect("/signup");
+    }
+
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -397,6 +406,12 @@ app.get("/check-email", async (req, res) => {
     res.json({ exists: !!user });
 });
 
+app.get("/check-username", async (req, res) => {
+    const { username } = req.query;
+    const user = await User.findOne({ username });
+    res.json({ exists: !!user });
+
+});
 
 //-----------------Google routes-----------------------------------------
 app.get("/auth/google",
