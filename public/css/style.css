@@ -516,8 +516,124 @@ color: white !important;
   font-weight: 600 !important;
 }
 
-
-
 .dropdown{
   display: inline;
+}
+
+.profile-card{
+  background-color: #1f1d1d !important;
+  border-radius: 1.5rem !important;
+  padding: 1.75rem !important;
+  color: white !important;
+  border: 1px #413f3f solid !important;
+  width: 50vw !important;
+  margin: 0 auto !important;
+  padding-top: 2rem !important;
+  
+}
+
+.profile{
+  background-color: #1f1d1d !important;
+  border-radius: 1.5rem !important;
+  padding: 1.75rem !important;
+  color: white !important;
+  border: 1px #A855F7 solid !important;
+  width: 50vw !important;
+  margin: 0 auto !important;
+  padding-top: 2rem !important;
+  box-shadow: 0 0 25px rgb(49, 23, 72);
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.post-card{
+  background-color: #1f1d1d !important;
+  border-radius: 1.5rem !important;
+  padding: 1.75rem !important;
+  color: white !important;
+  border: 1px #00FFFF solid !important;
+ cursor: pointer;
+  margin: 0 auto !important;
+
+}
+.post-card:hover{
+  background-color: #406b6b76 !important;
+  box-shadow:0 0px 16px 2px #00ffff7e !important;
+
+}
+
+.profile-section{
+  padding-top:6rem;
+  
+}
+
+.post-section{
+margin-top: 2rem !important;
+padding-bottom: 2rem !important;
+opacity: 0.8 !important;
+}
+
+.avatar{
+  width: 100px;
+  height: 100px;
+  border-radius: 2rem;
+}
+
+.username{
+  font-size: 2.5rem;
+  font-weight: 700;
+   color: #12fbf8;
+  background-image: linear-gradient(45deg, #12fbf8 , #7071dc 33%, #bb3b77 67%, #43ea5a 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bio{
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #f8f8f893 !important;
+  margin-top: 0.5rem !important;
+}
+
+.joined{
+  font-size: 0.95rem;
+  color:rgba(255, 255, 255, 0.541) !important;
+  margin-top: 1.5rem !important;
+}
+
+.gradient-bar{
+  background: linear-gradient(90deg, #a855f7, #f472b6);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  text-align: center;
+  width: 40vw;
+  margin: 0 auto;
+  margin-bottom: -1rem !important;
+}
+
+.count{
+  text-align: center !important;
+}
+.number{
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6b6603;
+  background-image: linear-gradient(45deg,  #0ed7e6 50%, #3469a1 75%, #59b0cf 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.avatar{
+  width: 70% !important;
+  height: 70% !important;
+  object-fit:cover !important;
+  border-radius: 2rem !important;
+  
+}
+.avatar-div{
+text-align: center !important;
+
 }
