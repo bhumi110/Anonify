@@ -19,6 +19,15 @@ Whether it’s drama, advice, or unfiltered thoughts, Anonify is the space to sp
 - 🧠 **Data Validation:** Powered by Joi for clean and safe data handling.  
 
 ---
+🧭 Upcoming Features:
+- 💬 Reply to Comments
+
+- ✏️ Edit Profile
+
+- 🏅 Achievement Badges
+
+
+---
 
 ## 🧩 Tech Stack
 
@@ -51,6 +60,5 @@ Whether it’s drama, advice, or unfiltered thoughts, Anonify is the space to sp
 ---
 
 
-Current Version: v1.0.0
-: Expect more features, UI updates, and community tools coming soon!☕
+Version 1.0.0 : Initial release 💜 More features and refinements coming soon!
   
