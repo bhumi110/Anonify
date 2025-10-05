@@ -19,11 +19,11 @@ Whether it’s drama, advice, or unfiltered thoughts, Anonify is the space to sp
 
 ---
 🧭 Upcoming Features:
-- 💬 Reply to Comments
+- 💬 Reply to Comments (threaded replies)
 
-- ✏️ Edit Profile
+- ✏️ Edit Profile (profile picture + bio)
 
-- 🏅 Achievement Badges
+- 🏅 Achievement Badges (milestones and recognition system)
 
 
 ---
