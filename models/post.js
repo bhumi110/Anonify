@@ -46,6 +46,7 @@ const postSchema = new Schema(
             ref: "Comment" 
         }
     ],
+    
 
   },
   { timestamps: true }

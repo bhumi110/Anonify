@@ -5,81 +5,96 @@
 
         <div class="profile-section">
 
-            <div class="card mb-3 profile" >
-                <div class="row g-0">
-                    <div class="col-md-4 avatar-div">
-                        <img src="/assets/bhumi.jpg" class="img-fluid rounded-circle avatar" alt="avatar">
+            <div class="card mb-3 profile">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="avatar">
+                            <%= user.username ? user.username[0].toUpperCase() : 'A' %>
+                        </div>
                     </div>
-                    <div class="col-md-8">
+
+                    <div class="col">
                         <div class="card-body">
-                            <h5 class="card-title username">Anonymous</h5>
-                            <h6 class="card-subtitle mb-2  bio">Just here for the tea ☕✨</h6>
-                            <p class="card-text joined">Joined January 2025</p>
+                            <h5 class="card-title username">
+                                <%= user.username || 'Anonymous' %>
+                            </h5>
+                            <h6 class="card-subtitle mb-2  bio">
+                                <%=user.bio%>
+                            </h6>
+                            <p class="card-text joined">Joined <%= new Date(user.createdAt).toLocaleString('default', {
+                                    month: 'long' , year: 'numeric' }) %>
+                            </p>
                         </div>
 
                     </div>
                 </div>
-              
+
                 <hr>
-                    <div class="count mt-2">
-                        <div>
-                            <h5 class="card-title number">42</h5>
-                            <h6 class="card-subtitle mb-2">Posts</h6>
-                        </div>
-
-
-                    </div>
-            </div>
-            </div>
-
-
-            <div class="gradient-bar mt-4 ">
-                <h5><i class="fa-regular fa-comment"></i> My Posts</h5>
-            </div>
-
-
-            <!--Post section-->
-
-
-            <div class="post-section">
-                <div class="row row-cols-1 row-cols-md-2 g-4 profile-card">
+                <div class="count mt-2">
                     <div>
-                        <div class="card post-card">
-
-                            <div class="card-body">
-                                <h5 class="card-title">When Best Friends Turn into Strangers</h5>
-
-                            </div>
-                        </div>
+                        <h5 class="card-title number">
+                            <%= userPosts.length %>
+                        </h5>
+                        <h6 class="card-subtitle mb-2">Posts</h6>
                     </div>
-                    <div>
-                        <div class="card post-card">
 
-                            <div class="card-body">
-                                <h5 class="card-title">My Parents Still Treat Me Like a Kid</h5>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="card post-card">
-
-                            <div class="card-body">
-                                <h5 class="card-title">The Sibling Rivalry That Never Ended</h5>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="card post-card">
-
-                            <div class="card-body">
-                                <h5 class="card-title">She Blocked Me After Our First Date</h5>
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
+
+
+        <div class="gradient-bar mt-4 ">
+            <h5><i class="fa-regular fa-comment"></i> My Posts</h5>
+        </div>
+
+
+        <!--Post section-->
+
+
+        <div class="post-section">
+    <% if (userPosts && userPosts.length > 0) { %>
+        <div class="row row-cols-1 row-cols-md-2 g-4 profile-card">
+            <% for (let post of userPosts) { %>
+                <% if (post) { %>
+                    <% if (!post.anonymous) { %>
+                        
+                        <div class="col">
+                            <div class="card post-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a href="/post/<%= post._id %>" class="text-decoration-none text-light">
+                                            <%= post.title %>
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    <% } else if (currUser && currUser._id.toString() === post.owner._id.toString()) { %>
+                        
+                        <div class="col">
+                            <div class="card post-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a href="/post/<%= post._id %>" class="text-decoration-none text-light">
+                                            <%= post.title %>
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            <% } %>
+        </div>
+    <% } else { %>
+        <div class="text-center text-muted mt-4 profile-card">
+            <i class="fa-regular fa-file-lines fa-2x mb-3"></i>
+            <p>No posts yet</p>
+        </div>
+    <% } %>
+</div>
+
+
+    </div>
     </div>

@@ -18,7 +18,7 @@
                     <span class="badge rounded-pill text-bg-dark card-badge anonymous ">Anonymous</span>
                     <%}%>
                         <% if(!post.anonymous){%>
-                            <span class="badge rounded-pill text-bg-dark card-badge owner ">@<%=post.owner.username%>
+                            <span class="badge rounded-pill text-bg-dark card-badge owner "><a href="/profile/<%=post.owner._id%>" style="text-decoration: none;">@<%=post.owner.username%></a>
                             </span>
                             <%}%>
                                 <div class="post-meta">

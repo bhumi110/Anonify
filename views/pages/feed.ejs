@@ -100,8 +100,12 @@
                                                         <%= post.reactions?.shock || 0 %>
                                                     </span></button>
                                             </div>
-                                            <div class="feed-post">
+                                            <div class="feed-post mt-2 mb-2 text-end" style="font-size: 1.15rem;">
                                                 <small class="text-mute card-text">
+                                                    <i class="fa-regular fa-comment"></i>
+                                                    <%=post.comments?.length || 0%>
+                                                </small>
+                                                <small class="text-mute card-text ms-3">
 
                                                     <i class="fa-regular fa-clock"></i>
                                                     <%= post.timeAgo %>

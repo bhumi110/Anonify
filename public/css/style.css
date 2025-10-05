@@ -289,6 +289,9 @@ transform: scale(1.1);
   background: linear-gradient(135deg,#A855F7, #F472B6, #00FFFF) !important;
   color: #0C0A09 !important;
 }
+.card-badge.owner a{
+  color: black;
+}
 .heading h2{
   font-size: 2.25rem;
   font-weight: 600;
@@ -627,13 +630,19 @@ opacity: 0.8 !important;
 }
 
 .avatar{
-  width: 70% !important;
-  height: 70% !important;
-  object-fit:cover !important;
-  border-radius: 2rem !important;
+ width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 0 25px rgba(236, 72, 153, 0.4);
+  border: 3px solid #9240a0 !important;
+  text-transform: uppercase;
+  flex-shrink: 0;
   
-}
-.avatar-div{
-text-align: center !important;
-
 }

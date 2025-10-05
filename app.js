@@ -139,7 +139,14 @@ app.get("/", wrapAsync(async (req, res) => {
 
 //-------------FEED--------------------------------
 app.get("/feed", wrapAsync(async (req, res) => {
-    const allPosts = await Post.find({});
+    const allPosts = await Post.find({})
+        .populate("owner")
+        .lean();
+
+    allPosts.forEach(post => {
+        post.timeAgo = dayjs(post.createdAt).fromNow();
+    });
+    
     res.render("pages/feed.ejs", { allPosts });
 }));
 
@@ -284,9 +291,38 @@ app.post(
 */
 
 //--------------PROFILE------------------------------
-app.get("/profile", wrapAsync(async (req, res) => {
-    res.render("users/profile.ejs");
+
+app.get("/profile", (req, res) => {
+    if (!req.isAuthenticated()) {
+        req.flash("error", "Please log in first!");
+        return res.redirect("/login");
+    }
+    res.redirect(`/profile/${req.user._id}`);
+});
+
+
+
+app.get("/profile/:id", wrapAsync(async (req, res) => {
+    const { id } = req.params;
+
+    // Find user
+    const user = await User.findById(id);
+    if (!user) {
+        req.flash("error", "User not found!");
+        return res.redirect("/feed");
+    }
+
+    // Find all posts created by this user
+    const userPosts = await Post.find({ owner: id }).sort({ createdAt: -1 });
+
+    res.render("users/profile.ejs", {
+        user,          // user whose profile it is
+        userPosts,     // posts they’ve made
+        currUser: req.user // currently logged in user
+    });
 }));
+
+
 
 //--------------REACTIONS-------------------------------------------
 app.post("/post/:id/react/:reaction", isLoggedIn, wrapAsync(async (req, res) => {
@@ -384,7 +420,7 @@ app.post("/login", savedRedirectUrl, passport.authenticate("local", { failureRed
     req.flash("success", "Welcome back!!");
     let redirectUrl = res.locals.redirectUrl || "/feed";
     res.redirect(redirectUrl);
-
+console.log(req.user);
 });
 
 

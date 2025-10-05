@@ -26,8 +26,18 @@ const userSchema=new Schema({
         type:Date,
         expires:3600
     },
-});
+    bio: { 
+        type: String, 
+        default: "" 
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now,
+    }
+},{ timestamps: true }
+);
 
-userSchema.plugin(passportLocalMongoose,{ usernameField: "email" });
+userSchema.plugin(passportLocalMongoose); // username login
+
 
 module.exports=mongoose.model("User",userSchema);

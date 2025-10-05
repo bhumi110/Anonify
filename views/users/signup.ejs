@@ -39,21 +39,4 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById("email").addEventListener("blur", async (e) => {
-            const email = e.target.value;
-            const res = await fetch(`/check-email?email=${email}`);
-            const data = await res.json();
-            if (data.exists) {
-                req.flash("error","Email already registered! Try logging in.");
-            }
-        });
-        document.getElementById("username").addEventListener("blur", async (e) => {
-            const username = e.target.value;
-            const res = await fetch(`/check-username?username=${username}`);
-            const data = await res.json();
-            if (data.exists) {
-                req.flash("error","Username already taken! Try a different one.");
-            }
-        });
-    </script>
+  
