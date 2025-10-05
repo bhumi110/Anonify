@@ -37,7 +37,7 @@ const userSchema=new Schema({
 },{ timestamps: true }
 );
 
-userSchema.plugin(passportLocalMongoose); // username login
+userSchema.plugin(passportLocalMongoose);
 
 
 module.exports=mongoose.model("User",userSchema);

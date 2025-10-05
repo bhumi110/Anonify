@@ -646,3 +646,13 @@ opacity: 0.8 !important;
   flex-shrink: 0;
   
 }
+
+.edit{
+  border: 3px solid #5c1169 !important;
+  border-radius: 1rem !important;
+  margin-right: 1rem !important;
+}
+.edit:hover{
+  background-color:#6c2da73b !important ;
+  color: white !important;
+}

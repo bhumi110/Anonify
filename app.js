@@ -22,9 +22,21 @@ const { isLoggedIn, savedRedirectUrl, isOwner, validateComment, validatePost } =
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 const session = require("express-session");
+const MongoStore=require("connect-mongo");
 const flash = require("connect-flash");
 
+//const MONGO_URL = "mongodb://127.0.0.1:27017/anonify";
+const dbUrl=process.env.ATLASDB_URL;
 
+main()
+    .then(() => {
+        console.log("connected");
+    })
+    .catch((err) => console.log(err));
+
+async function main() {
+    await mongoose.connect(dbUrl);
+}
 
 app.use(methodOverride('_method'));
 app.set("view engine", "ejs");
@@ -34,16 +46,32 @@ app.use(express.urlencoded({ extended: true }));
 app.engine("ejs", ejsMate);
 dayjs.extend(relativeTime);
 
+
+const store=MongoStore.create({
+    mongoUrl:dbUrl,
+    crypto:{
+        secret:process.env.SECRET,
+    },
+    touchAfter:604800,
+});
+
+store.on("error",()=>{
+    console.log("session store error",err)
+});
+
 const sessionOptions = {
     secret: process.env.SECRET,
+    store,
     resave: false,
     saveUninitialized: true,
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 1000,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
     }
 };
+
+
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -69,12 +97,9 @@ passport.use(new GoogleStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         const email = profile.emails[0].value;
-
-        // Only find existing user
         const user = await User.findOne({ email });
 
         if (!user) {
-            // User not found → don’t create new user
             return done(null, false, { message: "No account found for this Google email." });
         }
 
@@ -94,17 +119,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/anonify";
 
-main()
-    .then(() => {
-        console.log("connected");
-    })
-    .catch((err) => console.log(err));
-
-async function main() {
-    await mongoose.connect(MONGO_URL);
-}
 
 
 /*
@@ -311,14 +326,12 @@ app.get("/profile/:id", wrapAsync(async (req, res) => {
         req.flash("error", "User not found!");
         return res.redirect("/feed");
     }
-
-    // Find all posts created by this user
     const userPosts = await Post.find({ owner: id }).sort({ createdAt: -1 });
 
     res.render("users/profile.ejs", {
-        user,          // user whose profile it is
-        userPosts,     // posts they’ve made
-        currUser: req.user // currently logged in user
+        user,
+        userPosts,
+        currUser: req.user
     });
 }));
 
@@ -365,6 +378,8 @@ app.post("/post/:id/comment/:commentId/review/:type", isLoggedIn, async (req, re
 
 
 //-----------------USER ROUTE--------------------------------------------------------------------------------
+
+//----------SIGNUP-------------------------------------
 app.get("/signup", (req, res) => {
     res.render("users/signup.ejs");
 });
@@ -411,6 +426,7 @@ app.post("/signup", wrapAsync(async (req, res) => {
 }));
 
 
+//-----------------LOGIN-----------------------------------------------------------
 app.get("/login", (req, res) => {
     res.render("users/login.ejs");
 });
@@ -423,7 +439,7 @@ app.post("/login", savedRedirectUrl, passport.authenticate("local", { failureRed
 console.log(req.user);
 });
 
-
+//-------------------------------LOGOUT---------------------------------------------------------
 app.get("/logout", (req, res) => {
     req.logout((err) => {
         if (err) {
@@ -449,7 +465,7 @@ app.get("/check-username", async (req, res) => {
 
 });
 
-//-----------------Google routes-----------------------------------------
+//-----------------GOOGLE ROUTE-----------------------------------------------------------
 app.get("/auth/google",
     passport.authenticate("google", { scope: ["profile", "email"] })
 );
