@@ -14,8 +14,7 @@ Whether it’s drama, advice, or unfiltered thoughts, Anonify is the space to sp
 - 😄 **Reactions & Feedback:** Express emotions through quick reactions and replies.  
 - 📅 **Timestamped Posts:** Built-in Day.js support for human-friendly time display.  
 - 🧭 **Category Tagging:** Sort and discover stories under categories like Advice, Drama, Relationship, etc.  
-- 🌈 **Google Auth (Optional):** Integrated via Passport.js for secure login if needed.  
-- 📧 **Email Notifications:** (Nodemailer ready) for user feedback or admin alerts.  
+- 🌈 **Google Auth (Optional):** Integrated via Passport.js for secure login if needed.    
 - 🧠 **Data Validation:** Powered by Joi for clean and safe data handling.  
 
 ---
