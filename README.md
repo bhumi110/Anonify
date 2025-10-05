@@ -4,7 +4,7 @@ Anonify is a web platform that allows users to share stories, confessions, and o
 Whether it’s drama, advice, or unfiltered thoughts, Anonify is the space to speak your truth without judgment.
 
 🌐 **Live Demo:** [anonify-4p60.onrender.com](https://anonify-4p60.onrender.com)
-Note: Currently optimized for desktop; mobile responsiveness coming soon.
+- Note: Currently optimized for desktop; mobile responsiveness coming soon.
 
 ---
 
