@@ -1,4 +1,4 @@
-# ☕ Anonify: Spill the Tea. Anonymously.
+# ☕ Anonify: Spill the Tea. Anonymously...
 
 Anonify is a web platform that allows users to share stories, confessions, and opinions completely anonymously.  
 Whether it’s drama, advice, or unfiltered thoughts, Anonify is the space to speak your truth without judgment.
