@@ -60,5 +60,5 @@ Whether it’s drama, advice, or unfiltered thoughts, Anonify is the space to sp
 ---
 
 
-Version 1.0.0 : Initial release 💜 More features and refinements coming soon!
+Version 1.0.0 : Initial release 💜 More features and refinements coming soon...!
   
